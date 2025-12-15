@@ -20,6 +20,12 @@ let bookingDateFilter = ''; // Date filter for specific date
 let bookingSearchQuery = ''; // Search by guest name
 let currentBookingId = null;
 
+// Dining state
+let menuItems = [];
+let foodOrders = [];
+let diningView = 'menu'; // 'menu' or 'orders'
+let foodOrderFilter = 'all';
+
 // ===================================
 // Initialize Dashboard
 // ===================================
@@ -94,8 +100,11 @@ async function loadDashboard() {
             loadContactStats(),
             loadContacts(),
             loadBookingStats(),
+            loadBookingStats(),
             loadBookings(),
-            loadArchivedCount()
+            loadArchivedCount(),
+            loadMenu(),
+            loadFoodOrders()
         ]);
     } catch (error) {
         console.error('Dashboard load error:', error);
@@ -798,7 +807,52 @@ function setupEventListeners() {
             if (section === 'settings') {
                 loadSettings();
             }
+            
+            // Handle Dining section visibility
+            document.getElementById('diningSection').style.display = section === 'dining' ? 'block' : 'none';
         });
+    });
+
+    // Dining Tabs (Menu / Orders)
+    document.querySelectorAll('#diningTabs .filter-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            const view = tab.dataset.view;
+            diningView = view;
+            
+            // Update tabs
+            document.querySelectorAll('#diningTabs .filter-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            // Show views
+            document.getElementById('menuView').style.display = view === 'menu' ? 'block' : 'none';
+            document.getElementById('ordersView').style.display = view === 'orders' ? 'block' : 'none';
+        });
+    });
+
+    // Order Status Filters
+    document.querySelectorAll('#orderFilterTabs .filter-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+             const status = tab.dataset.status;
+             foodOrderFilter = status;
+             
+             document.querySelectorAll('#orderFilterTabs .filter-tab').forEach(t => t.classList.remove('active'));
+             tab.classList.add('active');
+             
+             renderFoodOrders(); // Re-render with filter
+        });
+    });
+
+    // Menu Form Submit
+    document.getElementById('menuForm').addEventListener('submit', handleMenuSubmit);
+
+    // Menu Search
+    document.getElementById('menuSearchInput').addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        const filtered = menuItems.filter(item => 
+            item.name.toLowerCase().includes(query) || 
+            item.category.toLowerCase().includes(query)
+        );
+        renderMenu(filtered);
     });
     
     // Note: Badge counts are now updated directly in loadStats, loadContactStats, and loadBookingStats
@@ -2047,3 +2101,210 @@ async function uploadOfferImage() {
 }
 
 
+
+// ===================================
+// Dining & Menu Management
+// ===================================
+
+async function loadMenu() {
+    try {
+        const response = await fetch('/api/menu/all', { credentials: 'include' });
+        const data = await response.json(); // Array of items
+        menuItems = data;
+        renderMenu(menuItems);
+    } catch (error) {
+        console.error('Error loading menu:', error);
+        showToast('Error loading menu', 'error');
+    }
+}
+
+function renderMenu(items) {
+    const tbody = document.getElementById('menuTableBody');
+    if (items.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 2rem;">No menu items found</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = items.map(item => `
+        <tr>
+            <td>
+                <img src="${item.image || 'images/menu-placeholder.png'}" alt="Item" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+            </td>
+            <td><strong>${escapeHtml(item.name)}</strong>${item.isVegetarian ? ' <span style="color:green;" title="Veg">●</span>' : ' <span style="color:red;" title="Non-Veg">●</span>'}</td>
+            <td>${escapeHtml(item.category)}</td>
+            <td>₹${item.price}</td>
+            <td>
+                ${item.isAvailable 
+                    ? '<span class="status-badge confirmed">Available</span>' 
+                    : '<span class="status-badge cancelled">Unavailable</span>'}
+            </td>
+            <td>
+                <button class="action-btn view" onclick="openEditMenuModal('${item._id}')">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="action-btn delete" onclick="deleteMenuItem('${item._id}')">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+async function loadFoodOrders() {
+    try {
+        const response = await fetch('/api/orders', { credentials: 'include' });
+        const data = await response.json(); // Array of orders
+        foodOrders = data;
+        
+        // Update badge
+        const pendingCount = foodOrders.filter(o => o.status === 'Pending').length;
+        const badge = document.getElementById('orderPendingBadge');
+        badge.textContent = pendingCount;
+        badge.style.display = pendingCount > 0 ? 'inline' : 'none';
+
+        renderFoodOrders();
+    } catch (error) {
+        console.error('Error loading orders:', error);
+    }
+}
+
+function renderFoodOrders() {
+    let filtered = foodOrders;
+    if (foodOrderFilter !== 'all') {
+        filtered = foodOrders.filter(o => o.status === foodOrderFilter);
+    }
+
+    const tbody = document.getElementById('ordersTableBody');
+    if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding: 2rem;">No orders found</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = filtered.map(order => `
+        <tr>
+            <td><small>#${order._id.slice(-6)}</small></td>
+            <td>${escapeHtml(order.customerDetails.name)}</td>
+            <td>${escapeHtml(order.customerDetails.roomNumber)}</td>
+            <td>
+                <small>${order.items.map(i => `${i.quantity}x ${i.name}`).join('<br>')}</small>
+            </td>
+            <td><strong>₹${order.totalAmount}</strong></td>
+            <td><span class="status-badge ${order.status.toLowerCase()}">${order.status}</span></td>
+            <td>${formatDateTime(order.createdAt)}</td>
+            <td>
+                <select onchange="updateOrderStatus('${order._id}', this.value)" style="padding: 4px; border-radius: 4px;">
+                    <option value="Pending" ${order.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                    <option value="Preparing" ${order.status === 'Preparing' ? 'selected' : ''}>Preparing</option>
+                    <option value="Ready" ${order.status === 'Ready' ? 'selected' : ''}>Ready</option>
+                    <option value="Delivered" ${order.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                    <option value="Cancelled" ${order.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                </select>
+            </td>
+        </tr>
+    `).join('');
+}
+
+async function handleMenuSubmit(e) {
+    e.preventDefault();
+    const id = document.getElementById('menuItemId').value;
+    const isEdit = !!id;
+
+    const payload = {
+        name: document.getElementById('itemName').value,
+        category: document.getElementById('itemCategory').value,
+        price: Number(document.getElementById('itemPrice').value),
+        description: document.getElementById('itemDescription').value,
+        image: document.getElementById('itemImage').value,
+        isVegetarian: document.getElementById('itemVegetarian').checked,
+        isAvailable: document.getElementById('itemAvailable').checked
+    };
+
+    try {
+        const url = isEdit ? `/api/menu/${id}` : '/api/menu';
+        const method = isEdit ? 'PUT' : 'POST';
+
+        const response = await fetch(url, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            showToast(`Item ${isEdit ? 'updated' : 'added'} successfully`, 'success');
+            closeMenuModal();
+            loadMenu();
+        } else {
+            showToast('Error saving item', 'error');
+        }
+    } catch (error) {
+        console.error('Save error:', error);
+        showToast('Error saving item', 'error');
+    }
+}
+
+async function deleteMenuItem(id) {
+    if (!confirm('Delete this menu item?')) return;
+    try {
+        const response = await fetch(`/api/menu/${id}`, {
+            method: 'DELETE',
+            credentials: 'include'
+        });
+        if (response.ok) {
+            showToast('Item deleted', 'success');
+            loadMenu();
+        } else {
+            showToast('Error deleting item', 'error');
+        }
+    } catch (error) {
+        showToast('Error deleting item', 'error');
+    }
+}
+
+async function updateOrderStatus(id, status) {
+    try {
+        const response = await fetch(`/api/orders/${id}/status`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ status })
+        });
+        if (response.ok) {
+            showToast(`Order marked as ${status}`, 'success');
+            loadFoodOrders();
+        }
+    } catch (error) {
+        showToast('Error updating status', 'error');
+    }
+}
+
+// Modal Helpers
+function openAddMenuModal() {
+    document.getElementById('menuForm').reset();
+    document.getElementById('menuItemId').value = '';
+    document.getElementById('menuModalTitle').textContent = 'Add Menu Item';
+    document.getElementById('menuModal').classList.add('show');
+}
+
+function openEditMenuModal(id) {
+    const item = menuItems.find(i => i._id === id);
+    if (!item) return;
+
+    document.getElementById('menuItemId').value = item._id;
+    document.getElementById('itemName').value = item.name;
+    document.getElementById('itemCategory').value = item.category;
+    document.getElementById('itemPrice').value = item.price;
+    document.getElementById('itemDescription').value = item.description || '';
+    document.getElementById('itemImage').value = item.image || '';
+    document.getElementById('itemVegetarian').checked = item.isVegetarian;
+    document.getElementById('itemAvailable').checked = item.isAvailable;
+
+    document.getElementById('menuModalTitle').textContent = 'Edit Menu Item';
+    document.getElementById('menuModal').classList.add('show');
+}
+
+function closeMenuModal() {
+    document.getElementById('menuModal').classList.remove('show');
+}
+
+// Initial Load Call if on Dining Page (handled in loadDashboard)

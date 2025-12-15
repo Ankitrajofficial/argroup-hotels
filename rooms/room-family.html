@@ -156,74 +156,89 @@
     <section class="booking-form-section" id="bookingForm">
         <div class="container">
             <div class="booking-form-card">
-                <div class="form-header">
+                <div class="form-header" onclick="toggleBookingForm()">
                     <i class="fas fa-gift"></i>
-                    <h2>Book at ₹0</h2>
+                    <h2>Book at ₹0 <i class="fas fa-chevron-down header-chevron"></i></h2>
                     <p>No payment required now • Pay at hotel • Free cancellation</p>
+                    <span class="expand-hint">Click to expand booking form</span>
                 </div>
+                
+                <div class="booking-form-wrapper" id="bookingFormWrapper">
                 
                 <form id="roomBookingForm" class="booking-form">
                     <input type="hidden" name="roomType" value="Family Room">
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="bookingName"><i class="fas fa-user"></i> Full Name *</label>
-                            <input type="text" id="bookingName" name="name" required placeholder="Enter your name">
+                            <label for="bookingName"><i class="fas fa-user"></i> Name</label>
+                            <input type="text" id="bookingName" name="name" required placeholder="Full Name" autocomplete="name">
                         </div>
                         <div class="form-group">
-                            <label for="bookingEmail"><i class="fas fa-envelope"></i> Email *</label>
-                            <input type="email" id="bookingEmail" name="email" required placeholder="yourname@email.com">
+                            <label for="bookingEmail"><i class="fas fa-envelope"></i> Email</label>
+                            <input type="email" id="bookingEmail" name="email" required placeholder="Email Address" autocomplete="email">
                             <span class="field-error" id="emailError"></span>
                         </div>
                     </div>
                     
                     <div class="form-row">
-                        <div class="form-group">
-                            <label for="bookingPhone"><i class="fas fa-phone"></i> Phone *</label>
+                        <div class="form-group full-width">
+                            <label for="bookingPhone"><i class="fas fa-phone"></i> Phone</label>
                             <div class="phone-input-group">
                                 <select id="countryCode" name="countryCode" class="country-code-select">
                                     <option value="+91">🇮🇳 +91</option>
                                     <option value="+1">🇺🇸 +1</option>
                                     <option value="+44">🇬🇧 +44</option>
                                     <option value="+971">🇦🇪 +971</option>
-                                    <option value="+65">🇸🇬 +65</option>
-                                    <option value="+61">🇦🇺 +61</option>
-                                    <option value="+81">🇯🇵 +81</option>
-                                    <option value="+86">🇨🇳 +86</option>
                                 </select>
-                                <input type="tel" id="bookingPhone" name="phone" required placeholder="10-digit number" maxlength="10" pattern="[0-9]{10}">
+                                <input type="tel" id="bookingPhone" name="phone" required placeholder="Mobile Number" maxlength="10" pattern="[0-9]{10}" autocomplete="tel">
                             </div>
                             <span class="field-error" id="phoneError"></span>
                         </div>
-                        <div class="form-group">
-                            <label for="bookingGuests"><i class="fas fa-users"></i> Guests</label>
-                            <select id="bookingGuests" name="guests">
-                                <option value="1">1 Guest</option>
-                                <option value="2">2 Guests</option>
-                                <option value="3">3 Guests</option>
-                                <option value="4" selected>4 Guests</option>
-                                <option value="5">5 Guests</option>
-                                <option value="6">6 Guests</option>
-                                <option value="7">7 Guests</option>
-                                <option value="8">8 Guests</option>
-                            </select>
-                        </div>
                     </div>
-                    
+
+                    <!-- Dates Row -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="bookingCheckIn"><i class="fas fa-calendar-plus"></i> Check-In *</label>
+                            <label for="bookingCheckIn"><i class="fas fa-calendar-alt"></i> Check-In</label>
                             <input type="date" id="bookingCheckIn" name="checkIn" required>
                         </div>
                         <div class="form-group">
-                            <label for="bookingCheckOut"><i class="fas fa-calendar-minus"></i> Check-Out *</label>
+                            <label for="bookingCheckOut"><i class="fas fa-calendar-alt"></i> Check-Out</label>
                             <input type="date" id="bookingCheckOut" name="checkOut" required>
+                        </div>
+                    </div>
+
+                    <!-- Guests & Food Row -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookingGuests"><i class="fas fa-users"></i> Guests</label>
+                            <select id="bookingGuests" name="guests">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4" selected>4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="foodOption"><i class="fas fa-utensils"></i> Food Option</label>
+                            <select id="foodOption" name="foodOption">
+                                <option value="None">Select Meal Plan</option>
+                                <option value="Day Set (All Meals)">Day Set (All Meals)</option>
+                                <option value="Breakfast Only">Breakfast Only</option>
+                                <option value="Lunch Only">Lunch Only</option>
+                                <option value="Snacks Only">Snacks Only</option>
+                                <option value="Dinner Only">Dinner Only</option>
+                            </select>
                         </div>
                     </div>
                     
                     <div class="form-group full-width">
                         <label for="bookingRequests"><i class="fas fa-comment-dots"></i> Special Requests</label>
-                        <textarea id="bookingRequests" name="specialRequests" rows="3" placeholder="Any special requirements? (e.g., early check-in, extra bed, kids cribs, etc.)"></textarea>
+                        <textarea id="bookingRequests" name="specialRequests" rows="3" placeholder="Any special requirements? (e.g., early check-in, extra bed, etc.)"></textarea>
                     </div>
                     
                     <button type="submit" class="booking-submit-btn" id="bookingSubmitBtn">
@@ -231,6 +246,7 @@
                         <span>Book Now at ₹0</span>
                     </button>
                 </form>
+                </div>
                 
                 <div class="booking-success-message" id="bookingSuccess" style="display: none;">
                     <i class="fas fa-check-circle"></i>
@@ -746,6 +762,7 @@
                         checkIn: formData.get('checkIn'),
                         checkOut: formData.get('checkOut'),
                         guests: parseInt(formData.get('guests')),
+                        foodOption: formData.get('foodOption'),
                         specialRequests: formData.get('specialRequests')
                     };
 

@@ -85,6 +85,10 @@
           <i class="fas fa-cog"></i>
           <span>Settings</span>
         </button>
+        <button class="category-btn" data-section="dining">
+          <i class="fas fa-utensils"></i>
+          <span>Dining</span>
+        </button>
       </div>
 
       <!-- Stats Cards -->
@@ -439,7 +443,136 @@
                 </span>
             </div>
         </div>
+
+        <!-- Dining Section -->
+        <div class="dining-section admin-section" id="diningSection" style="display: none;">
+            <div class="section-header">
+                <h2><i class="fas fa-utensils"></i> Dining Management</h2>
+                <div class="filter-tabs" id="diningTabs">
+                    <button class="filter-tab active" data-view="menu">Menu Items</button>
+                    <button class="filter-tab" data-view="orders">Orders <span class="pending-badge" id="orderPendingBadge" style="display:none;">0</span></button>
+                </div>
+            </div>
+
+            <!-- Menu View -->
+            <div id="menuView">
+                <div class="actions-bar">
+                    <button class="action-btn add-new" onclick="openAddMenuModal()">
+                        <i class="fas fa-plus"></i> Add New Item
+                    </button>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="menuSearchInput" placeholder="Search menu...">
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="users-table" id="menuTable">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="menuTableBody">
+                            <!-- Menu items loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Orders View -->
+            <div id="ordersView" style="display: none;">
+                <div class="actions-bar">
+                    <div class="filter-tabs" id="orderFilterTabs">
+                        <button class="filter-tab active" data-status="all">All</button>
+                        <button class="filter-tab" data-status="Pending">Pending</button>
+                        <button class="filter-tab" data-status="Preparing">Preparing</button>
+                        <button class="filter-tab" data-status="Ready">Ready</button>
+                        <button class="filter-tab" data-status="Delivered">Delivered</button>
+                        <button class="filter-tab" data-status="Cancelled">Cancelled</button>
+                    </div>
+                    <button class="action-btn refresh" onclick="loadFoodOrders()">
+                        <i class="fas fa-sync"></i> Refresh
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="users-table" id="ordersTable">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Guest</th>
+                                <th>Room</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <!-- Orders loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </main>
+
+    <!-- Add/Edit Menu Modal -->
+    <div class="modal-overlay" id="menuModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="menuModalTitle">Add Menu Item</h3>
+                <button class="modal-close" onclick="closeMenuModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="menuForm">
+                    <input type="hidden" id="menuItemId">
+                    <div class="form-group">
+                        <label>Item Name</label>
+                        <input type="text" id="itemName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="itemCategory" required>
+                            <option value="Starters">Starters</option>
+                            <option value="Main Course">Main Course</option>
+                            <option value="Breads">Breads</option>
+                            <option value="Rice">Rice</option>
+                            <option value="Desserts">Desserts</option>
+                            <option value="Beverages">Beverages</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" id="itemPrice" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="itemDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Image URL</label>
+                        <input type="text" id="itemImage" placeholder="images/menu-placeholder.png">
+                    </div>
+                    <div class="form-group check-group">
+                        <label>
+                            <input type="checkbox" id="itemVegetarian"> Vegetarian
+                        </label>
+                        <label>
+                            <input type="checkbox" id="itemAvailable" checked> Available
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-submit">Save Item</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Contact Detail Modal -->
     <div class="modal-overlay" id="contactModal">

@@ -182,7 +182,7 @@
             <div class="about-content">
                 <div class="about-text">
                     <h3>Where Luxury Meets Tradition</h3>
-                    <p>Welcome to Hotel Ortus, one of the most sought-after destinations in Kota, where spectacular hospitality meets world-class facilities. Since our establishment, we have been committed to creating unforgettable experiences for our guests through exceptional service, attention to detail, and a genuine passion for hospitality.</p>
+                    <p>Welcome to Hotel Ortus, Kota's premier destination for spectacular hospitality. We are committed to creating unforgettable guest experiences through exceptional service and a genuine passion for excellence.</p>
                     
                     <p>Our commitment to excellence is reflected in every aspect of our hotel—from our elegantly appointed rooms and suites to our world-class dining experiences. Whether you're here for business, leisure, or celebrating life's special moments, we strive to exceed your expectations and make your stay truly memorable.</p>
                     
@@ -221,32 +221,73 @@
                         </div>
                     </div>
                 </div>
+            <div class="features-toggle-wrapper" style="text-align: center; margin-top: 2rem;">
+                <button class="btn-view-features" onclick="toggleFeaturesList()" id="featuresToggleBtn">
+                    <span>View All Features</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
             </div>
 
-            <div class="about-features">
-                <div class="feature-item">
-                    <i class="fas fa-check-circle"></i>
-                    <span>24/7 Premium Service & Concierge</span>
+            <div class="about-features" id="aboutFeaturesList" style="display: none; opacity: 0; transition: opacity 0.4s ease;">
+                <div class="feature-item" onclick="toggleFeature(this)">
+                    <div class="feature-header">
+                        <i class="fas fa-check-circle"></i>
+                        <span>24/7 Premium Service</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="feature-detail">
+                        Our dedicated concierge team is available round-the-clock to assist with your every need, from bookings to personalized requests.
+                    </div>
                 </div>
-                <div class="feature-item">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Luxury Accommodations & Suites</span>
+                <div class="feature-item" onclick="toggleFeature(this)">
+                    <div class="feature-header">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Luxury Accommodations</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="feature-detail">
+                        Experience world-class comfort in our elegantly appointed rooms and suites, designed for relaxation and style.
+                    </div>
                 </div>
-                <div class="feature-item">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Multi-Cuisine Fine Dining</span>
+                <div class="feature-item" onclick="toggleFeature(this)">
+                    <div class="feature-header">
+                        <i class="fas fa-utensils"></i>
+                        <span>Multi-Cuisine Dining</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="feature-detail">
+                        Savor exquisite flavors from around the world at our fine dining restaurants, crafted by expert chefs.
+                    </div>
                 </div>
-                <div class="feature-item">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Premium Event & Banquet Facilities</span>
+                <div class="feature-item" onclick="toggleFeature(this)">
+                    <div class="feature-header">
+                        <i class="fas fa-glass-cheers"></i>
+                        <span>Event & Banquet Halls</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="feature-detail">
+                        Host unforgettable events in our spacious banquet halls, perfect for weddings, conferences, and celebrations.
+                    </div>
                 </div>
-                <div class="feature-item">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Modern Business Center</span>
+                <div class="feature-item" onclick="toggleFeature(this)">
+                    <div class="feature-header">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Modern Business Center</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="feature-detail">
+                        Stay productive with our fully equipped business center, featuring high-speed internet and meeting spaces.
+                    </div>
                 </div>
-                <div class="feature-item">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Complimentary High-Speed WiFi</span>
+                <div class="feature-item" onclick="toggleFeature(this)">
+                    <div class="feature-header">
+                        <i class="fas fa-wifi"></i>
+                        <span>High-Speed WiFi</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="feature-detail">
+                        Stay connected with complimentary high-speed wireless internet access available throughout the hotel.
+                    </div>
                 </div>
             </div>
             </div>
@@ -459,6 +500,103 @@
         </div>
     </section>
 
+    <!-- Dining & Menu Section -->
+    <section class="dining-section" id="dining">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Culinary Delights</span>
+                <h2 class="section-title">Values of Taste</h2>
+                <div class="title-underline"></div>
+                <p>Experience a symphony of flavors prepared by our expert chefs.</p>
+            </div>
+
+            <!-- Featured Menu Grid (4 Items Only) -->
+            <div class="menu-grid" id="featuredMenuGrid">
+                <!-- 4 items loaded here -->
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                </div>
+            </div>
+
+            <!-- View Full Menu Button -->
+            <div class="view-menu-wrapper" style="text-align: center; margin-top: 3rem;">
+                <button class="btn-primary-outline" onclick="openMenuModal()">
+                    <i class="fas fa-utensils"></i> View Full Menu
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Full Menu Modal -->
+    <div class="menu-modal-overlay" id="menuOverlay">
+        <div class="menu-modal-content">
+            <div class="menu-modal-header">
+                <h3>Our Full Menu</h3>
+                <div class="menu-search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="menuSearch" placeholder="Search for dishes..." oninput="searchMenu(this.value)">
+                </div>
+                <button class="close-menu-modal" onclick="closeMenuModal()">&times;</button>
+            </div>
+            
+            <div class="menu-modal-body">
+                <!-- Menu Categories -->
+                <div class="menu-categories sticky-categories">
+                    <button class="menu-tab active" onclick="filterMenu('all', this)">All</button>
+                    <button class="menu-tab" onclick="filterMenu('Starters', this)">Starters</button>
+                    <button class="menu-tab" onclick="filterMenu('Main Course', this)">Main Course</button>
+                    <button class="menu-tab" onclick="filterMenu('Breads', this)">Breads</button>
+                    <button class="menu-tab" onclick="filterMenu('Rice', this)">Rice</button>
+                    <button class="menu-tab" onclick="filterMenu('Desserts', this)">Desserts</button>
+                    <button class="menu-tab" onclick="filterMenu('Beverages', this)">Beverages</button>
+                </div>
+
+                <!-- Full Menu Grid -->
+                <div class="menu-grid" id="publicMenuGrid">
+                    <!-- All menu items loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Cart Button -->
+    <div class="floating-cart-btn" id="cartFloatBtn" onclick="toggleCartDrawer()">
+        <i class="fas fa-shopping-basket"></i>
+        <span class="cart-count-badge" id="cartCount">0</span>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div class="cart-drawer-overlay" id="cartOverlay" onclick="toggleCartDrawer()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Your Order</h3>
+            <button class="close-cart" onclick="toggleCartDrawer()">&times;</button>
+        </div>
+        <div class="cart-body" id="cartItemsContainer">
+            <!-- Cart items render here -->
+            <div class="empty-cart-msg">
+                <i class="fas fa-utensils"></i>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span class="total-amount" id="cartTotal">₹0</span>
+            </div>
+            
+            <div class="cart-form">
+                <input type="text" id="orderGuestName" placeholder="Your Name" required>
+                <input type="text" id="orderRoomNumber" placeholder="Room Number / Table No." required>
+                <textarea id="orderNotes" placeholder="Special instructions (optional)" rows="1"></textarea>
+            </div>
+
+            <button class="btn-checkout" onclick="placeOrder()">
+                Place Order <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
     <!-- Services Section -->
     <section class="services" id="services">
         <div class="container">
@@ -565,6 +703,7 @@
                         <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
+                <!-- ... (desktop grid items) ... -->
                 <div class="gallery-item">
                     <img src="images/hero1.png" alt="Hotel Exterior">
                     <div class="gallery-overlay">
@@ -596,59 +735,39 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Mobile Gallery View (Featured + Thumbnails) -->
+            <div class="gallery-mobile-view">
+                <div class="gallery-featured">
+                    <img src="images/room1.png" alt="Featured Gallery Image" id="mobileFeaturedImage">
+                </div>
+                <div class="gallery-thumbnails">
+                    <div class="gallery-thumb active">
+                        <img src="images/room1.png" alt="Thumbnail" onclick="changeMobileGalleryImage(this)">
+                    </div>
+                    <div class="gallery-thumb">
+                        <img src="images/hero1.png" alt="Thumbnail" onclick="changeMobileGalleryImage(this)">
+                    </div>
+                    <div class="gallery-thumb">
+                        <img src="images/room2.png" alt="Thumbnail" onclick="changeMobileGalleryImage(this)">
+                    </div>
+                    <div class="gallery-thumb">
+                        <img src="images/hero2.png" alt="Thumbnail" onclick="changeMobileGalleryImage(this)">
+                    </div>
+                </div>
+                <!-- Second Row of Thumbnails -->
+                 <div class="gallery-thumbnails" style="margin-top: 10px;">
+                    <div class="gallery-thumb">
+                        <img src="images/room3.png" alt="Thumbnail" onclick="changeMobileGalleryImage(this)">
+                    </div>
+                    <div class="gallery-thumb">
+                        <img src="images/hero3.png" alt="Thumbnail" onclick="changeMobileGalleryImage(this)">
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <!-- Full Width Carousel -->
-        <div class="gallery-carousel-wrapper">
-            <div class="gallery-carousel" id="galleryCarousel">
-                <div class="carousel-slide active" style="background-image: url('images/hero1.png');">
-                    <div class="slide-content">
-                        <h3>Exquisite Architecture</h3>
-                    </div>
-                </div>
-                <div class="carousel-slide" style="background-image: url('images/hero2.png');">
-                    <div class="slide-content">
-                        <h3>Premium Comfort</h3>
-                    </div>
-                </div>
-                <div class="carousel-slide" style="background-image: url('images/hero3.png');">
-                    <div class="slide-content">
-                        <h3>Grand Celebrations</h3>
-                    </div>
-                </div>
-                <div class="carousel-slide" style="background-image: url('images/room1.png');">
-                    <div class="slide-content">
-                        <h3>Luxury Interiors</h3>
-                    </div>
-                </div>
-                <div class="carousel-slide" style="background-image: url('images/room2.png');">
-                    <div class="slide-content">
-                        <h3>Elegant Suites</h3>
-                    </div>
-                </div>
-                <div class="carousel-slide" style="background-image: url('images/room3.png');">
-                    <div class="slide-content">
-                        <h3>Family Comfort</h3>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="gallery-nav prev" id="galleryPrev">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="gallery-nav next" id="galleryNext">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-            
-            <div class="gallery-indicators">
-                <span class="gallery-dot active" data-slide="0"></span>
-                <span class="gallery-dot" data-slide="1"></span>
-                <span class="gallery-dot" data-slide="2"></span>
-                <span class="gallery-dot" data-slide="3"></span>
-                <span class="gallery-dot" data-slide="4"></span>
-                <span class="gallery-dot" data-slide="5"></span>
-            </div>
-        </div>
+
     </section>
 
     <!-- Dining & Menu Gallery Section -->
@@ -656,108 +775,43 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Culinary Delights</span>
-                <h2 class="section-title">Exquisite Dining & Menu</h2>
+                <h2 class="section-title">Exquisite Dining</h2>
                 <div class="title-underline"></div>
                 <p class="section-description">Savor the flavors of our world-class cuisine and explore our diverse menu offerings</p>
             </div>
             
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="images/restaurant_interior.png" alt="Restaurant Interior">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+
+
+        <!-- Mobile Gallery View (Featured + Thumbnails) -->
+        <div class="gallery-mobile-view">
+            <div class="gallery-featured">
+                <img src="images/restaurant_interior.png" alt="Featured Dining Image" id="diningFeaturedImage">
+            </div>
+            <div class="gallery-thumbnails">
+                <div class="gallery-thumb active">
+                    <img src="images/restaurant_interior.png" alt="Thumbnail" onclick="changeDiningGalleryImage(this)">
                 </div>
-                <div class="gallery-item">
-                    <img src="images/food_dish_1.png" alt="Gourmet Salmon Dish">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+                <div class="gallery-thumb">
+                    <img src="images/food_dish_1.png" alt="Thumbnail" onclick="changeDiningGalleryImage(this)">
                 </div>
-                <div class="gallery-item">
-                    <img src="images/menu_preview.png" alt="Restaurant Menu">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+                <div class="gallery-thumb">
+                    <img src="images/menu_preview.png" alt="Thumbnail" onclick="changeDiningGalleryImage(this)">
                 </div>
-                <div class="gallery-item">
-                    <img src="images/food_dish_2.png" alt="Chocolate Lava Cake">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+                <div class="gallery-thumb">
+                    <img src="images/food_dish_2.png" alt="Thumbnail" onclick="changeDiningGalleryImage(this)">
                 </div>
-                <div class="gallery-item">
-                    <img src="images/dining_table_setup.png" alt="Table Setup">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+            </div>
+            <!-- Second Row of Thumbnails -->
+             <div class="gallery-thumbnails" style="margin-top: 10px;">
+                <div class="gallery-thumb">
+                    <img src="images/dining_table_setup.png" alt="Thumbnail" onclick="changeDiningGalleryImage(this)">
                 </div>
-                <div class="gallery-item">
-                    <img src="images/chef_cooking.png" alt="Chef Plating">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
+                <div class="gallery-thumb">
+                    <img src="images/chef_cooking.png" alt="Thumbnail" onclick="changeDiningGalleryImage(this)">
                 </div>
             </div>
         </div>
-        
-        <!-- Full Width Dining Carousel -->
-        <div class="gallery-carousel-wrapper">
-            <div class="gallery-carousel" id="diningCarousel">
-                <div class="carousel-slide active" style="background-image: url('images/restaurant_interior.png');">
-                    <div class="slide-content">
-                        <h3>Fine Dining Ambiance</h3>
-                    </div>
-                </div>
-                <div class="carousel-slide" style="background-image: url('images/food_dish_1.png');">
-                    <div class="slide-content">
-                        <h3>Signature Dishes</h3>
-                    </div>
-                </div>
-                <div class="carousel-slide" style="background-image: url('images/menu_preview.png');">
-                    <div class="slide-content">
-                        <h3>Curated Menu</h3>
-                    </div>
-                </div>
-                <div class="carousel-slide" style="background-image: url('images/food_dish_2.png');">
-                    <div class="slide-content">
-                        <h3>Decadent Desserts</h3>
-                    </div>
-                </div>
-                <div class="carousel-slide" style="background-image: url('images/cocktail_drink.png');">
-                    <div class="slide-content">
-                        <h3>Handcrafted Cocktails</h3>
-                    </div>
-                </div>
-                <div class="carousel-slide" style="background-image: url('images/dining_table_setup.png');">
-                    <div class="slide-content">
-                        <h3>Elegant Settings</h3>
-                    </div>
-                </div>
-                <div class="carousel-slide" style="background-image: url('images/chef_cooking.png');">
-                    <div class="slide-content">
-                        <h3>Culinary Artistry</h3>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="gallery-nav prev" id="diningPrev">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="gallery-nav next" id="diningNext">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-            
-            <div class="gallery-indicators">
-                <span class="dining-dot active" data-slide="0"></span>
-                <span class="dining-dot" data-slide="1"></span>
-                <span class="dining-dot" data-slide="2"></span>
-                <span class="dining-dot" data-slide="3"></span>
-                <span class="dining-dot" data-slide="4"></span>
-                <span class="dining-dot" data-slide="5"></span>
-                <span class="dining-dot" data-slide="6"></span>
-            </div>
-        </div>
+    </div>
     </section>
 
     <!-- Testimonials Section -->
@@ -1241,6 +1295,14 @@
             </div>
             
             <form class="auth-form" id="signInForm">
+                <!-- Guest Login Option -->
+                <button type="button" class="btn-guest-login" onclick="window.location.href='booking.html'">
+                    Continue as Guest <i class="fas fa-arrow-right"></i>
+                </button>
+                <div class="auth-divider-text">
+                    <span>or sign in with email</span>
+                </div>
+
                 <div class="form-group-auth">
                     <i class="fas fa-envelope"></i>
                     <input type="email" id="signInEmail" placeholder="Email Address" required>

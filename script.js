@@ -1515,3 +1515,467 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+/* ===================================
+   Mobile Gallery Logic
+   =================================== */
+function changeMobileGalleryImage(thumbnail) {
+    // Update main image source
+    const featuredImage = document.getElementById('mobileFeaturedImage');
+    const newSrc = thumbnail.src;
+    
+    // Add fade effect
+    featuredImage.style.opacity = '0';
+    setTimeout(() => {
+        featuredImage.src = newSrc;
+        featuredImage.style.opacity = '1';
+    }, 200);
+
+    // Update active thumbnail state
+    const allThumbnails = document.querySelectorAll('.gallery-thumb');
+    allThumbnails.forEach(thumb => thumb.classList.remove('active'));
+    thumbnail.parentElement.classList.add('active');
+}
+
+function changeDiningGalleryImage(thumbnail) {
+    // Update main image source for dining gallery
+    const featuredImage = document.getElementById('diningFeaturedImage');
+    const newSrc = thumbnail.src;
+    
+    // Add fade effect
+    featuredImage.style.opacity = '0';
+    setTimeout(() => {
+        featuredImage.src = newSrc;
+        featuredImage.style.opacity = '1';
+    }, 200);
+
+    // Update active thumbnail state in dining gallery
+    // Scope search to the dining gallery container to avoid conflict if classes are reused globally
+    // But since structure is simple, looking for parent's siblings works or just scoping selector
+    const galleryContainer = thumbnail.closest('.gallery-mobile-view');
+    const allThumbnails = galleryContainer.querySelectorAll('.gallery-thumb');
+    
+    allThumbnails.forEach(thumb => thumb.classList.remove('active'));
+    thumbnail.parentElement.classList.add('active');
+}
+
+/* ===================================
+   Booking Form Collapsible Logic
+   =================================== */
+function toggleBookingForm() {
+    const card = document.querySelector('.booking-form-card');
+    if (card) {
+        card.classList.toggle('collapsed');
+    }
+}
+
+function expandBookingForm() {
+    const card = document.querySelector('.booking-form-card');
+    if (card) {
+        card.classList.remove('collapsed');
+    }
+}
+
+// Initialize state based on screen width
+function initFormState() {
+    const card = document.querySelector('.booking-form-card');
+    if (card) {
+        if (window.innerWidth <= 768) {
+            card.classList.add('collapsed');
+        } else {
+            card.classList.remove('collapsed');
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initFormState);
+
+// Sticky button handler
+document.addEventListener('click', function(e) {
+    if (e.target.closest('.sticky-book-btn') || e.target.classList.contains('sticky-book-btn')) {
+        const btn = e.target.closest('.sticky-book-btn') || e.target;
+        // Check if it's an anchor to #bookingForm
+        if (btn.getAttribute('href') === '#bookingForm') {
+            e.preventDefault();
+            expandBookingForm();
+            const formSection = document.getElementById('bookingForm');
+            if (formSection) {
+                const offset = 80;
+                const elementPosition = formSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+        }
+    }
+});
+
+
+function toggleFeature(element) {
+    // Optional: Close others
+    // const allFeatures = document.querySelectorAll('.feature-item');
+    // allFeatures.forEach(item => {
+    //     if (item !== element) item.classList.remove('active');
+    // });
+    
+    element.classList.toggle('active');
+}
+
+function toggleFeaturesList() {
+    const list = document.getElementById('aboutFeaturesList');
+    const btn = document.getElementById('featuresToggleBtn');
+    const btnText = btn.querySelector('span');
+    
+    if (list.style.display === 'none') {
+        list.style.display = 'flex';
+        // Small timeout to allow display change to register before opacity transition
+        setTimeout(() => {
+            list.classList.add('visible');
+        }, 10);
+        btn.classList.add('active');
+        btnText.textContent = 'Hide Features';
+    } else {
+        list.classList.remove('visible');
+        btn.classList.remove('active');
+        btnText.textContent = 'View All Features';
+        
+        // Wait for animation to finish before hiding
+        setTimeout(() => {
+            list.style.display = 'none';
+        }, 400); // Matches transition duration roughly
+    }
+}
+
+/* ===================================
+   Dining & Menu Logic
+   =================================== */
+
+// Global State
+let publicMenu = [];
+let cart = [];
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    loadPublicMenu();
+    loadCartFromStorage();
+});
+
+// Load Menu
+async function loadPublicMenu() {
+    try {
+        const response = await fetch('/api/menu');
+        const data = await response.json();
+        publicMenu = data;
+        
+        // Render Featured (First 4)
+        renderFeaturedMenu(publicMenu.slice(0, 4));
+        
+        // Render Full Menu
+        renderPublicMenu(publicMenu);
+    } catch (error) {
+        console.error('Error loading menu:', error);
+        document.getElementById('featuredMenuGrid').innerHTML = '<p class="error-msg">Failed to load menu.</p>';
+        document.getElementById('publicMenuGrid').innerHTML = '<p class="error-msg">Failed to load menu.</p>';
+    }
+}
+
+// Render Featured Menu
+function renderFeaturedMenu(items) {
+    const grid = document.getElementById('featuredMenuGrid');
+    if (!grid) return;
+    
+    if (items.length === 0) {
+        grid.innerHTML = '<p class="no-items-msg">Coming soon!</p>';
+        return;
+    }
+
+    grid.innerHTML = items.map(item => createMenuCardHtml(item)).join('');
+}
+
+// Render Public Menu (Full)
+function renderPublicMenu(items) {
+    const grid = document.getElementById('publicMenuGrid');
+    if (!grid) return;
+    
+    if (items.length === 0) {
+        grid.innerHTML = '<p class="no-items-msg">No items found in this category.</p>';
+        return;
+    }
+
+    grid.innerHTML = items.map(item => createMenuCardHtml(item)).join('');
+}
+
+// Helper for Card HTML
+function createMenuCardHtml(item) {
+    return `
+        <div class="menu-card">
+            <div class="menu-img-wrapper">
+                <img src="${item.image || 'images/menu-placeholder.png'}" alt="${item.name}" loading="lazy">
+                <span class="${item.isVegetarian ? 'veg-badge' : 'non-veg-badge'}">
+                    ${item.isVegetarian ? 'VEG' : 'NON-VEG'}
+                </span>
+            </div>
+            <div class="menu-content">
+                <h3 class="menu-title">${escapeHtml(item.name)}</h3>
+                <p class="menu-desc">${item.description ? escapeHtml(item.description) : ''}</p>
+                <div class="menu-footer">
+                    <span class="menu-price">₹${item.price}</span>
+                    <button class="btn-add-cart" onclick="addToCart('${item._id}')" ${!item.isAvailable ? 'disabled' : ''}>
+                        ${item.isAvailable ? 'Add' : 'Sold Out'}
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Menu Modal Functions
+function openMenuModal() {
+    document.getElementById('menuOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scroll
+}
+
+function closeMenuModal() {
+    document.getElementById('menuOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Close on outside click
+document.getElementById('menuOverlay').addEventListener('click', (e) => {
+    if (e.target.id === 'menuOverlay') {
+        closeMenuModal();
+    }
+});
+
+// Filter Menu (Category)
+function filterMenu(category, btn) {
+    // Update Active Tab
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Clear search if switching category
+    const searchInput = document.getElementById('menuSearch');
+    if (searchInput) searchInput.value = '';
+
+    if (category === 'all') {
+        renderPublicMenu(publicMenu);
+    } else {
+        const filtered = publicMenu.filter(item => item.category === category);
+        renderPublicMenu(filtered);
+    }
+}
+
+// Search Menu
+function searchMenu(query) {
+    // Reset tabs to All visually since search searches everything
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    // Select 'All' tab if it exists (optional polish)
+    
+    const term = query.toLowerCase();
+    const filtered = publicMenu.filter(item => 
+        item.name.toLowerCase().includes(term) || 
+        item.description.toLowerCase().includes(term)
+    );
+    renderPublicMenu(filtered);
+}
+
+
+/* ===================================
+   Shopping Cart Logic
+   =================================== */
+
+function addToCart(itemId) {
+    const item = publicMenu.find(i => i._id === itemId);
+    if (!item) return;
+
+    const existingItem = cart.find(i => i.menuItemId === itemId);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            menuItemId: item._id,
+            name: item.name,
+            price: item.price,
+            quantity: 1
+        });
+    }
+
+    updateCartUI();
+    saveCartToStorage();
+    
+    // Show Feedback
+    showToast(`Added ${item.name} to cart`);
+}
+
+// Toast System
+function showToast(message) {
+    // Create toast element if not exists
+    let toast = document.getElementById('toastNotification');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toastNotification';
+        toast.className = 'toast-notification';
+        document.body.appendChild(toast);
+    }
+
+    toast.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+    toast.classList.add('show');
+
+    // Hide after 3s
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+    saveCartToStorage();
+}
+
+function updateQuantity(index, change) {
+    cart[index].quantity += change;
+    
+    if (cart[index].quantity <= 0) {
+        removeFromCart(index);
+    } else {
+        updateCartUI();
+        saveCartToStorage();
+    }
+}
+
+function updateCartUI() {
+    // Update Badge
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById('cartCount').textContent = totalItems;
+    
+    // Update List
+    const container = document.getElementById('cartItemsContainer');
+    const totalEl = document.getElementById('cartTotal');
+    
+    if (cart.length === 0) {
+        container.innerHTML = `
+            <div class="empty-cart-msg" style="text-align: center; color: #adb5bd; padding-top: 3rem;">
+                <i class="fas fa-utensils" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                <p>Your cart is empty</p>
+                <button onclick="toggleCartDrawer()" style="margin-top: 1rem; padding: 0.5rem 1rem; border: 1px solid #ced4da; background: white; border-radius: 20px; cursor: pointer;">Browse Menu</button>
+            </div>
+        `;
+        totalEl.textContent = '₹0';
+        return;
+    }
+
+    let totalAmount = 0;
+    
+    container.innerHTML = cart.map((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        totalAmount += itemTotal;
+        
+        return `
+            <div class="cart-item">
+                <div class="cart-item-info">
+                    <div class="cart-item-title">${escapeHtml(item.name)}</div>
+                    <div class="cart-item-price">₹${itemTotal}</div>
+                    <div class="cart-item-controls">
+                        <button class="btn-qty" onclick="updateQuantity(${index}, -1)">-</button>
+                        <span class="qty-display">${item.quantity}</span>
+                        <button class="btn-qty" onclick="updateQuantity(${index}, 1)">+</button>
+                    </div>
+                </div>
+                <button class="btn-remove" onclick="removeFromCart(${index})">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
+        `;
+    }).join('');
+
+    totalEl.textContent = `₹${totalAmount}`;
+}
+
+function toggleCartDrawer() {
+    document.getElementById('cartDrawer').classList.toggle('active');
+    document.getElementById('cartOverlay').classList.toggle('active');
+}
+
+function saveCartToStorage() {
+    localStorage.setItem('ortus_cart', JSON.stringify(cart));
+}
+
+function loadCartFromStorage() {
+    const saved = localStorage.getItem('ortus_cart');
+    if (saved) {
+        try {
+            cart = JSON.parse(saved);
+            updateCartUI();
+        } catch (e) {
+            console.error('Error parsing cart', e);
+        }
+    }
+}
+
+async function placeOrder() {
+    if (cart.length === 0) return alert('Your cart is empty');
+    
+    const name = document.getElementById('orderGuestName').value.trim();
+    const room = document.getElementById('orderRoomNumber').value.trim();
+    const notes = document.getElementById('orderNotes').value.trim();
+    
+    if (!name || !room) {
+        return alert('Please enter your name and room/table number');
+    }
+
+    const totalAmount = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+
+    const orderData = {
+        items: cart,
+        totalAmount,
+        customerDetails: {
+            name,
+            roomNumber: room,
+            notes
+        }
+    };
+
+    const btn = document.querySelector('.btn-checkout');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Placing Order...';
+    btn.disabled = true;
+
+    try {
+        const response = await fetch('/api/orders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderData)
+        });
+
+        if (response.ok) {
+            alert('Order placed successfully! We will verify and prepare it shortly.');
+            cart = [];
+            saveCartToStorage();
+            updateCartUI();
+            toggleCartDrawer();
+            document.getElementById('orderNotes').value = ''; // Reset form
+        } else {
+            alert('Failed to place order. Please try again.');
+        }
+    } catch (error) {
+        console.error('Order error:', error);
+        alert('Something went wrong. Please check your connection.');
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+}
+
+// Utility
+function escapeHtml(text) {
+  if (!text) return '';
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}

@@ -75,4 +75,16 @@ const optionalAuth = async (req, res, next) => {
     next();
 };
 
-module.exports = { protect, optionalAuth };
+// Middleware to check if user is admin
+const isAdmin = (req, res, next) => {
+    if (req.user && req.user.role === 'admin') {
+        next();
+    } else {
+        res.status(401).json({
+            success: false,
+            message: 'Not authorized as an admin'
+        });
+    }
+};
+
+module.exports = { protect, optionalAuth, isAdmin };
