@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Stay - Hotel Ortus</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="booking.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-crown"></i>
+                <span class="brand-text">HOTEL ORTUS</span>
+            </div>
+            
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#services" class="nav-link">Services</a>
+                <a href="index.html#rooms" class="nav-link">Rooms</a>
+                <a href="index.html#testimonials" class="nav-link">Testimonials</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+            </div>
+            
+            <div class="nav-actions">
+                <a href="tel:XXXXXXX" class="nav-phone">
+                    <i class="fas fa-phone"></i>
+                    <span>XXXXXXX</span>
+                </a>
+                <button class="btn-auth" id="signInBtn">
+                    <i class="fas fa-user"></i>
+                    <span>Sign In</span>
+                </button>
+                <button class="btn-primary" onclick="window.scrollTo({top: document.querySelector('.room-selection').offsetTop - 100, behavior: 'smooth'})">
+                    Select Room
+                </button>
+            </div>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <!-- Hero Section -->
+    <!-- <section class="booking-hero">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Book Your Stay</span>
+            </div>
+            <h1 class="hero-title">Reserve Your Luxury Experience</h1>
+            <p class="hero-subtitle">Choose your perfect room and embark on an unforgettable journey</p>
+        </div>
+    </section> -->
+
+    <!-- Room Selection Section -->
+    <section class="room-selection" id="roomSelection">
+        <div class="container">
+            <div class="section-header enhanced-header">
+                <span class="section-tag-script">Choose Your Room</span>
+                <h2 class="section-title">Select Your Perfect Accommodation</h2>
+                <div class="header-decoration">
+                    <span class="line"></span>
+                    <i class="fas fa-crown"></i>
+                    <span class="line"></span>
+                </div>
+            </div>
+
+            <div class="rooms-grid">
+                <!-- Deluxe Room -->
+                <div class="booking-room-card" data-room-type="deluxe" data-room-price="3500" data-room-name="Deluxe Room">
+                    <div class="room-badge">Popular Choice</div>
+                    <div class="booking-room-image" style="background-image: url('images/room1.png')"></div>
+                    <div class="booking-room-content">
+                        <div class="room-price">
+                            <span class="price-label">Starting from</span>
+                            <span class="price-amount">₹3,500<span class="price-period">/night</span></span>
+                        </div>
+                        <h3>Deluxe Room</h3>
+                        <p>Elegantly designed rooms with modern amenities and stunning views. Perfect for couples and business travelers.</p>
+                        
+                        <div class="room-details">
+                            <div class="room-detail">
+                                <i class="fas fa-bed"></i>
+                                <span>King Size Bed</span>
+                            </div>
+                            <div class="room-detail">
+                                <i class="fas fa-users"></i>
+                                <span>2 Guests</span>
+                            </div>
+                            <div class="room-detail">
+                                <i class="fas fa-ruler-combined"></i>
+                                <span>350 sq ft</span>
+                            </div>
+                        </div>
+
+                        <div class="amenities-list">
+                            <div class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</div>
+                            <div class="amenity-item"><i class="fas fa-tv"></i> Smart TV</div>
+                            <div class="amenity-item"><i class="fas fa-snowflake"></i> Air Conditioning</div>
+                            <div class="amenity-item"><i class="fas fa-coffee"></i> Mini Fridge</div>
+                        </div>
+
+
+
+                        <div class="room-actions" style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <a href="rooms/room-deluxe.html" class="btn-select-room" style="flex: 1; text-align: center; text-decoration: none;">
+                                <i class="fas fa-images"></i>
+                                View Gallery & Book
+                            </a>
+                            <a href="tel:XXXXXXX" class="btn-call-now" style="background: var(--accent-gold); color: white; padding: 0.875rem 1.5rem; border-radius: var(--radius-md); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600;">
+                                <i class="fas fa-phone"></i>
+                                Call
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Executive Suite -->
+                <div class="booking-room-card featured" data-room-type="executive" data-room-price="6500" data-room-name="Executive Suite">
+                    <div class="room-badge luxury">Premium</div>
+                    <div class="booking-room-image" style="background-image: url('images/room2.png')"></div>
+                    <div class="booking-room-content">
+                        <div class="room-price">
+                            <span class="price-label">Starting from</span>
+                            <span class="price-amount">₹6,500<span class="price-period">/night</span></span>
+                        </div>
+                        <h3>Executive Suite</h3>
+                        <p>Spacious suites with separate living area, premium amenities, and personalized service for an unforgettable experience.</p>
+                        
+                        <div class="room-details">
+                            <div class="room-detail">
+                                <i class="fas fa-bed"></i>
+                                <span>Premium Suite</span>
+                            </div>
+                            <div class="room-detail">
+                                <i class="fas fa-users"></i>
+                                <span>2 Guests</span>
+                            </div>
+                            <div class="room-detail">
+                                <i class="fas fa-ruler-combined"></i>
+                                <span>600 sq ft</span>
+                            </div>
+                        </div>
+
+                        <div class="amenities-list">
+                            <div class="amenity-item"><i class="fas fa-glass-martini"></i> Mini Bar</div>
+                            <div class="amenity-item"><i class="fas fa-hot-tub"></i> Jacuzzi</div>
+                            <div class="amenity-item"><i class="fas fa-bed"></i> King Bed</div>
+                            <div class="amenity-item"><i class="fas fa-concierge-bell"></i> Butler Service</div>
+                        </div>
+
+
+
+                        <div class="room-actions" style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <a href="rooms/room-executive.html" class="btn-select-room" style="flex: 1; text-align: center; text-decoration: none;">
+                                <i class="fas fa-images"></i>
+                                View Gallery & Book
+                            </a>
+                            <a href="tel:XXXXXXX" class="btn-call-now" style="background: var(--accent-gold); color: white; padding: 0.875rem 1.5rem; border-radius: var(--radius-md); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600;">
+                                <i class="fas fa-phone"></i>
+                                Call
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Family Room -->
+                <div class="booking-room-card" data-room-type="family" data-room-price="5000" data-room-name="Family Room">
+                    <div class="room-badge">Best for Families</div>
+                    <div class="booking-room-image" style="background-image: url('images/room3.png')"></div>
+                    <div class="booking-room-content">
+                        <div class="room-price">
+                            <span class="price-label">Starting from</span>
+                            <span class="price-amount">₹5,000<span class="price-period">/night</span></span>
+                        </div>
+                        <h3>Family Room</h3>
+                        <p>Comfortable and spacious rooms designed for families, with connecting rooms option and kid-friendly amenities.</p>
+                        
+                        <div class="room-details">
+                            <div class="room-detail">
+                                <i class="fas fa-bed"></i>
+                                <span>Multiple Beds</span>
+                            </div>
+                            <div class="room-detail">
+                                <i class="fas fa-users"></i>
+                                <span>4-6 Guests</span>
+                            </div>
+                            <div class="room-detail">
+                                <i class="fas fa-ruler-combined"></i>
+                                <span>500 sq ft</span>
+                            </div>
+                        </div>
+
+                        <div class="amenities-list">
+                            <div class="amenity-item"><i class="fas fa-utensils"></i> Dining Area</div>
+                            <div class="amenity-item"><i class="fas fa-child"></i> Kid-Friendly</div>
+                            <div class="amenity-item"><i class="fas fa-door-open"></i> Connecting Rooms</div>
+                            <div class="amenity-item"><i class="fas fa-couch"></i> Living Space</div>
+                        </div>
+
+
+
+                        <div class="room-actions" style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <a href="rooms/room-family.html" class="btn-select-room" style="flex: 1; text-align: center; text-decoration: none;">
+                                <i class="fas fa-images"></i>
+                                View Gallery & Book
+                            </a>
+                            <a href="tel:XXXXXXX" class="btn-call-now" style="background: var(--accent-gold); color: white; padding: 0.875rem 1.5rem; border-radius: var(--radius-md); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600;">
+                                <i class="fas fa-phone"></i>
+                                Call
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Warm Hospitality Welcome Section -->
+    <section class="hospitality-welcome">
+        <div class="container">
+            <div class="welcome-content">
+                <div class="welcome-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h2 class="welcome-title">A Warm Welcome Awaits You</h2>
+                <h3 class="welcome-subtitle">Experience the Essence of Royal Hospitality</h3>
+                <p class="welcome-text">
+                    At Hotel Ortus, we believe that true luxury lies in the details of our service. 
+                    From the moment you step through our doors, you are not just a guest, but family. 
+                    Our dedicated team is committed to ensuring your stay is nothing short of perfection, 
+                    blending traditional warmth with modern comfort. We look forward to hosting you 
+                    and creating memories that will last a lifetime.
+                </p>
+                <div class="welcome-signature">
+                    <span>The Ortus Team</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Form Section Removed -->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>
+                        <i class="fas fa-crown"></i>
+                        HOTEL ORTUS
+                    </h3>
+                    <p>Experience luxury living with spectacular hospitality and finest facilities in Vigyan Nagar, Kota.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="index.html#rooms">Rooms</a></li>
+                        <li><a href="index.html#testimonials">Testimonials</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="index.html#services">Accommodation</a></li>
+                        <li><a href="index.html#services">Banquet Halls</a></li>
+                        <li><a href="index.html#services">Catering</a></li>
+                        <li><a href="index.html#services">Fine Dining</a></li>
+                        <li><a href="index.html#services">Event Planning</a></li>
+                        <li><a href="index.html#services">Room Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Plot No - 2 & 3, Near Esi Hospital, Vigyan Nagar, Kota (Rajasthan), India</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span><a href="tel:XXXXXXX">XXXXXXX</a></span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span><a href="tel:XXXXXXX">XXXXXXX</a></span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span><a href="mailto:XXXXXXX">XXXXXXX</a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hotel Ortus. All rights reserved. | 
+                    <a href="policies/privacy-policy.html">Privacy Policy</a> | 
+                    <a href="policies/terms-conditions.html">Terms & Conditions</a> | 
+                    <a href="policies/cancellation-policy.html">Cancellation Policy</a> | 
+                    <a href="policies/hotel-policies.html">Hotel Policies</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sign In Modal -->
+    <div class="auth-modal" id="signInModal">
+        <div class="modal-overlay" onclick="closeModal('signInModal')"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('signInModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-header">
+                <i class="fas fa-crown modal-icon"></i>
+                <h2>Welcome Back</h2>
+                <p>Sign in to your account</p>
+            </div>
+            
+            <form class="auth-form" id="signInForm">
+                <div class="form-group-auth">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="signInEmail" placeholder="Email Address" required>
+                </div>
+                
+                <div class="form-group-auth">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="signInPassword" placeholder="Password" required>
+                </div>
+                
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="btn-auth-submit">
+                    Sign In
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <div class="auth-divider">
+                    <span>or continue with</span>
+                </div>
+                
+                <div class="social-auth">
+                    <button type="button" class="btn-social google">
+                        <i class="fab fa-google"></i>
+                        Google
+                    </button>
+                    <button type="button" class="btn-social facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        Facebook
+                    </button>
+                </div>
+                
+                <p class="auth-switch">
+                    Don't have an account? 
+                    <a href="#" onclick="switchModal('signInModal', 'signUpModal'); return false;">Sign Up</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div class="auth-modal" id="signUpModal">
+        <div class="modal-overlay" onclick="closeModal('signUpModal')"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('signUpModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-header">
+                <i class="fas fa-crown modal-icon"></i>
+                <h2>Create Account</h2>
+                <p>Join Hotel Ortus family</p>
+            </div>
+            
+            <form class="auth-form" id="signUpForm">
+                <div class="form-group-auth">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="signUpName" placeholder="Full Name" required>
+                </div>
+                
+                <div class="form-group-auth">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="signUpEmail" placeholder="Email Address" required>
+                </div>
+                
+                <div class="form-group-auth">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" id="signUpPhone" placeholder="Phone Number" required>
+                </div>
+                
+                <div class="form-group-auth">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="signUpPassword" placeholder="Password" required>
+                </div>
+                
+                <div class="form-group-auth">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="signUpConfirmPassword" placeholder="Confirm Password" required>
+                </div>
+                
+                <label class="terms-checkbox">
+                    <input type="checkbox" id="acceptTerms" required>
+                    <span>I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></span>
+                </label>
+                
+                <button type="submit" class="btn-auth-submit">
+                    Create Account
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <div class="auth-divider">
+                    <span>or continue with</span>
+                </div>
+                
+                <div class="social-auth">
+                    <button type="button" class="btn-social google">
+                        <i class="fab fa-google"></i>
+                        Google
+                    </button>
+                    <button type="button" class="btn-social facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        Facebook
+                    </button>
+                </div>
+                
+                <p class="auth-switch">
+                    Already have an account? 
+                    <a href="#" onclick="switchModal('signUpModal', 'signInModal'); return false;">Sign In</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loader"></div>
+        <p>Processing your payment...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+
+</body>
+</html>

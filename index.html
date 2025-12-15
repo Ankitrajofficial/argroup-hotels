@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Ortus - Luxury Living in Kota</title>
+    <meta name="description" content="Experience luxury living at Hotel Ortus. Premium accommodations, elegant banquet halls, fine dining, and exceptional hospitality in Kota.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-crown"></i>
+                <span class="brand-text">HOTEL ORTUS</span>
+            </div>
+            
+            <div class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#rooms" class="nav-link">Rooms</a>
+                <a href="#testimonials" class="nav-link">Testimonials</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <!-- Mobile-only auth links -->
+                <div class="mobile-auth-links">
+                    <button class="btn-auth-mobile" id="mobileSignInBtn">
+                        <i class="fas fa-user"></i>
+                        <span>Sign In</span>
+                    </button>
+                    <button class="btn-book-mobile" onclick="window.location.href='booking.html'">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Book Now</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="nav-actions">
+                <a href="tel:XXXXXXX" class="nav-phone">
+                    <i class="fas fa-phone"></i>
+                    <!-- <span>XXXXXXX</span> -->
+                </a>
+                <button class="btn-auth" id="signInBtn">
+                    <i class="fas fa-user"></i>
+                    <span>Sign In</span>
+                </button>
+                <!-- Admin Link (hidden by default, shown for admins) -->
+                <a href="admin/" class="btn-admin" id="adminLink" style="display: none;">
+                    <i class="fas fa-crown"></i>
+                    <span>Admin</span>
+                </a>
+                <button class="btn-primary" onclick="window.location.href='booking.html'">
+                    Book Now
+                </button>
+            </div>
+            
+            <!-- Mobile Sign In Icon (visible on small screens) -->
+            <button class="btn-signin-mobile" id="mobileSignInIcon">
+                <i class="fas fa-user"></i>
+            </button>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Carousel -->
+    <section class="hero" id="home">
+        <div class="hero-carousel">
+            <div class="carousel-item active" style="background-image: url('images/hero1.png');">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <h1 class="hero-title animate-fade-in">Welcome to Luxury</h1>
+                    <p class="hero-subtitle animate-fade-in-delay">Experience the finest hospitality at Hotel Ortus</p>
+                    <div class="hero-buttons animate-fade-in-delay-2">
+                        <button class="btn-hero-primary" onclick="document.getElementById('rooms').scrollIntoView({behavior: 'smooth'})">
+                            Explore Rooms
+                        </button>
+                        <button class="btn-hero-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                            Contact Us
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carousel-item" style="background-image: url('images/hero2.png');">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <h1 class="hero-title animate-fade-in">Elegance Redefined</h1>
+                    <p class="hero-subtitle animate-fade-in-delay">Luxurious rooms with world-class amenities</p>
+                    <div class="hero-buttons animate-fade-in-delay-2">
+                        <button class="btn-hero-primary" onclick="document.getElementById('rooms').scrollIntoView({behavior: 'smooth'})">
+                            View Accommodations
+                        </button>
+                        <button class="btn-hero-secondary" onclick="document.getElementById('services').scrollIntoView({behavior: 'smooth'})">
+                            Our Services
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carousel-item" style="background-image: url('images/hero3.png');">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <h1 class="hero-title animate-fade-in">Celebrate in Style</h1>
+                    <p class="hero-subtitle animate-fade-in-delay">Premium banquet halls for your special events</p>
+                    <div class="hero-buttons animate-fade-in-delay-2">
+                        <button class="btn-hero-primary" onclick="document.getElementById('services').scrollIntoView({behavior: 'smooth'})">
+                            Event Spaces
+                        </button>
+                        <button class="btn-hero-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                            Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('images/hero3.png');">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <h1 class="hero-title animate-fade-in">Celebrate in Style</h1>
+                    <p class="hero-subtitle animate-fade-in-delay">Premium banquet halls for your special events</p>
+                    <div class="hero-buttons animate-fade-in-delay-2">
+                        <button class="btn-hero-primary" onclick="document.getElementById('services').scrollIntoView({behavior: 'smooth'})">
+                            Event Spaces
+                        </button>
+                        <button class="btn-hero-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                            Enquire Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Carousel Controls -->
+        <button class="carousel-control prev" id="carouselPrev">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-control next" id="carouselNext">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators">
+            <span class="indicator active" data-slide="0"></span>
+            <span class="indicator" data-slide="1"></span>
+            <span class="indicator" data-slide="2"></span>
+        </div>
+        
+        <!-- Scroll Down Indicator -->
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Discover</span>
+                <h2 class="section-title">About Hotel Ortus</h2>
+                <div class="title-underline"></div>
+                <p class="section-description">Experience the perfect blend of luxury, comfort, and traditional hospitality</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Where Luxury Meets Tradition</h3>
+                    <p>Welcome to Hotel Ortus, one of the most sought-after destinations in Kota, where spectacular hospitality meets world-class facilities. Since our establishment, we have been committed to creating unforgettable experiences for our guests through exceptional service, attention to detail, and a genuine passion for hospitality.</p>
+                    
+                    <p>Our commitment to excellence is reflected in every aspect of our hotel—from our elegantly appointed rooms and suites to our world-class dining experiences. Whether you're here for business, leisure, or celebrating life's special moments, we strive to exceed your expectations and make your stay truly memorable.</p>
+                    
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <div class="highlight-number">15+</div>
+                            <div class="highlight-text">Years of Excellence</div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-number">5000+</div>
+                            <div class="highlight-text">Happy Guests</div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-number">50+</div>
+                            <div class="highlight-text">Luxury Rooms</div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="about-visual">
+                    <div class="about-image-wrapper">
+                        <img src="images/hero1.png" alt="Hotel Ortus Exterior" class="about-image">
+                        <div class="about-badge">
+                            <i class="fas fa-star"></i>
+                            <span>Premium</span>
+                            <span>Hospitality</span>
+                        </div>
+                    </div>
+                    <div class="about-quote">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p>"Every guest is a VIP at Hotel Ortus. We don't just provide accommodation; we create experiences that last a lifetime."</p>
+                        <div class="quote-author">
+                            <div class="author-line"></div>
+                            <span>Hotel Ortus Management</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-features">
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>24/7 Premium Service & Concierge</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Luxury Accommodations & Suites</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Multi-Cuisine Fine Dining</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Premium Event & Banquet Facilities</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Modern Business Center</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Complimentary High-Speed WiFi</span>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers Banner -->
+    <section class="offers-banner" id="offerBanner">
+        <div class="container">
+            <div class="banner-content">
+                <div class="banner-left">
+                    <div class="offer-tag">
+                        <i class="fas fa-bolt"></i>
+                        <span>Special Offer</span>
+                    </div>
+                    <h3>Exclusive Deals & Packages</h3>
+                    <p>Save up to 30% on your next stay • Free breakfast • Room upgrades available</p>
+                </div>
+                <div class="banner-center">
+                    <div class="banner-image-box">
+                        <img src="images/room1.png" alt="Offer">
+                    </div>
+                </div>
+                <div class="banner-right">
+                    <button class="btn-banner" onclick="window.location.href='booking.html'">
+                        View Offers
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <span class="banner-expiry">Expires: Dec 31, 2024</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rooms Section -->
+    <section class="rooms" id="rooms">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Accommodations</span>
+                <h2 class="section-title">Luxury Rooms & Suites</h2>
+                <div class="title-underline"></div>
+            </div>
+            
+            <div class="rooms-grid">
+                <div class="room-card">
+                    <div class="room-image" style="background-image: url('images/room1.png');"></div>
+                    <div class="room-content">
+                        <h3>Deluxe Room</h3>
+                        <div class="room-features">
+                            <span><i class="fas fa-bed"></i> King Size Bed</span>
+                            <span><i class="fas fa-wifi"></i> Free WiFi</span>
+                            <span><i class="fas fa-tv"></i> Smart TV</span>
+                        </div>
+                        <p>Elegantly designed rooms with modern amenities and stunning views. Perfect for couples and business travelers.</p>
+                        <button class="btn-room" onclick="window.location.href='rooms/room-deluxe.html'">
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="room-card">
+                    <div class="room-image" style="background-image: url('images/room2.png');"></div>
+                    <div class="room-content">
+                        <h3>Executive Suite</h3>
+                        <div class="room-features">
+                            <span><i class="fas fa-bed"></i> Premium Suite</span>
+                            <span><i class="fas fa-coffee"></i> Mini Bar</span>
+                            <span><i class="fas fa-bath"></i> Jacuzzi</span>
+                        </div>
+                        <p>Spacious suites with separate living area, premium amenities, and personalized service for an unforgettable experience.</p>
+                        <button class="btn-room" onclick="window.location.href='rooms/room-executive.html'">
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="room-card">
+                    <div class="room-image" style="background-image: url('images/room3.png');"></div>
+                    <div class="room-content">
+                        <h3>Family Room</h3>
+                        <div class="room-features">
+                            <span><i class="fas fa-bed"></i> Multiple Beds</span>
+                            <span><i class="fas fa-users"></i> 4-6 Guests</span>
+                            <span><i class="fas fa-utensils"></i> Dining Area</span>
+                        </div>
+                        <p>Comfortable and spacious rooms designed for families, with connecting rooms option and kid-friendly amenities.</p>
+                        <button class="btn-room" onclick="window.location.href='rooms/room-family.html'">
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Available On (Compact, inside rooms section) -->
+            <div class="rooms-available-on">
+                <span class="available-title"><i class="fas fa-globe"></i> Available On:</span>
+                <div class="available-badges">
+                    <!-- ============================================= -->
+                    <!-- PARTNER LINKS - Edit URLs below -->
+                    <!-- ============================================= -->
+                    <a href="#" class="mini-badge goibibo" title="Goibibo"><i class="fas fa-plane-departure"></i></a>
+                    <a href="#" class="mini-badge mmt" title="MakeMyTrip"><i class="fas fa-suitcase-rolling"></i></a>
+                    <a href="#" class="mini-badge booking" title="Booking.com"><i class="fas fa-bed"></i></a>
+                    <a href="#" class="mini-badge oyo" title="OYO"><i class="fas fa-hotel"></i></a>
+                    <a href="#" class="mini-badge agoda" title="Agoda"><i class="fas fa-calendar-check"></i></a>
+                    <!-- ============================================= -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Couple Friendly & Privacy Section -->
+    <section class="special-notice" id="coupleSection">
+        <div class="container">
+            <div class="notice-header">
+                <div class="notice-tag-enhanced">
+                    <div class="badge-shine"></div>
+                    <i class="fas fa-heart heartbeat-icon"></i>
+                    <span class="badge-text">Couple Friendly Hotel</span>
+                    <i class="fas fa-shield-check badge-verified"></i>
+                </div>
+                <h2>A Safe & Welcoming Space for Everyone</h2>
+                <p class="notice-subtitle">Your privacy, comfort, and happiness matter to us</p>
+            </div>
+
+            <div class="notice-grid">
+                <div class="notice-main-card">
+                    <div class="card-icon-large">
+                        <i class="fas fa-shield-heart"></i>
+                    </div>
+                    <h3>100% Couple-Friendly</h3>
+                    <p>All couples welcome - married or unmarried. Your comfort, privacy, and happiness are our priority. Experience a judgment-free stay with our professional, discreet staff.</p>
+                    <ul class="privacy-features">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span><strong>No Questions Asked</strong> - Simple, dignified check-in process</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span><strong>Complete Privacy</strong> - Your stay is confidential and secure</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span><strong>Professional Staff</strong> - Trained to respect your privacy</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span><strong>Safe Environment</strong> - 24/7 security for your peace of mind</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="notice-side-cards">
+                    <div class="amenity-card">
+                        <div class="amenity-icon">
+                            <i class="fas fa-concierge-bell"></i>
+                        </div>
+                        <div class="amenity-content">
+                            <h4>Personalized Services</h4>
+                            <p>Extra amenities, room decorations, special requests - just ask and we'll make it happen</p>
+                        </div>
+                    </div>
+
+                    <div class="amenity-card">
+                        <div class="amenity-icon">
+                            <i class="fas fa-spa"></i>
+                        </div>
+                        <div class="amenity-content">
+                            <h4>Romantic Packages</h4>
+                            <p>Celebrate special moments with our exclusive couple packages and add-ons</p>
+                        </div>
+                    </div>
+
+                    <div class="amenity-card">
+                        <div class="amenity-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <div class="amenity-content">
+                            <h4>Guaranteed Discretion</h4>
+                            <p>Your personal information and stay details remain completely confidential</p>
+                        </div>
+                    </div>
+
+                    <div class="amenity-card">
+                        <div class="amenity-icon">
+                            <i class="fas fa-gifts"></i>
+                        </div>
+                        <div class="amenity-content">
+                            <h4>Special Surprises</h4>
+                            <p>Complimentary decorations, cakes, and romantic setups available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trust-banner">
+                <div class="trust-item">
+                    <i class="fas fa-star"></i>
+                    <span>4.8★ Guest Rating</span>
+                </div>
+                <div class="trust-item">
+                    <i class="fas fa-users"></i>
+                    <span>5000+ Happy Couples</span>
+                </div>
+                <div class="trust-item">
+                    <i class="fas fa-lock"></i>
+                    <span>100% Privacy Guaranteed</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">What We Offer</span>
+                <h2 class="section-title" id="servicesHeader">
+                    Our Premium Services
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </h2>
+                <div class="title-underline"></div>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-hotel"></i>
+                    </div>
+                    <h3>Hotels</h3>
+                    <p>We are one of the popular hotels of the city with spectacular hospitality and finest facilities. Experience comfort like never before.</p>
+                    <button class="btn-service" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                        Enquire Now
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Catering</h3>
+                    <p>We provide delicious meals for parties in our self-owned banquet hall and outdoors. Customized menus tailored to your requirements.</p>
+                    <button class="btn-service" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                        Enquire Now
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Banquet Halls</h3>
+                    <p>Spacious and well-ventilated AC and non-AC banquet halls for all types of events. Features an open lawn area for outdoor celebrations.</p>
+                    <button class="btn-service" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                        Enquire Now
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-concierge-bell"></i>
+                    </div>
+                    <h3>Dining Area</h3>
+                    <p>Enjoy delicious, wholesome, and the best quality food at our restaurant. Choose from our wide variety of food and drinks menu.</p>
+                    <button class="btn-service" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                        Enquire Now
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                    <h3>Accommodation</h3>
+                    <p>We strive to provide privacy and peace with the most comfort and safety that meets different requirements throughout your stay.</p>
+                    <button class="btn-service" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                        Enquire Now
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <h3>Modern Amenities</h3>
+                    <p>High-speed WiFi, parking facilities, room service, and all modern conveniences to ensure a comfortable and connected stay.</p>
+                    <button class="btn-service" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                        Enquire Now
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Visual Tour</span>
+                <h2 class="section-title">Our Gallery</h2>
+                <div class="title-underline"></div>
+                <p class="section-description">Take a glimpse into the world of elegance and comfort at Hotel Ortus</p>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="images/room1.png" alt="Luxury Room Interior">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/hero1.png" alt="Hotel Exterior">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/room2.png" alt="Executive Suite">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/hero2.png" alt="Fine Dining">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/room3.png" alt="Family Room">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/hero3.png" alt="Banquet Hall">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Full Width Carousel -->
+        <div class="gallery-carousel-wrapper">
+            <div class="gallery-carousel" id="galleryCarousel">
+                <div class="carousel-slide active" style="background-image: url('images/hero1.png');">
+                    <div class="slide-content">
+                        <h3>Exquisite Architecture</h3>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background-image: url('images/hero2.png');">
+                    <div class="slide-content">
+                        <h3>Premium Comfort</h3>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background-image: url('images/hero3.png');">
+                    <div class="slide-content">
+                        <h3>Grand Celebrations</h3>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background-image: url('images/room1.png');">
+                    <div class="slide-content">
+                        <h3>Luxury Interiors</h3>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background-image: url('images/room2.png');">
+                    <div class="slide-content">
+                        <h3>Elegant Suites</h3>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background-image: url('images/room3.png');">
+                    <div class="slide-content">
+                        <h3>Family Comfort</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="gallery-nav prev" id="galleryPrev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="gallery-nav next" id="galleryNext">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <div class="gallery-indicators">
+                <span class="gallery-dot active" data-slide="0"></span>
+                <span class="gallery-dot" data-slide="1"></span>
+                <span class="gallery-dot" data-slide="2"></span>
+                <span class="gallery-dot" data-slide="3"></span>
+                <span class="gallery-dot" data-slide="4"></span>
+                <span class="gallery-dot" data-slide="5"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dining & Menu Gallery Section -->
+    <section class="dining-gallery" id="dining-gallery">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Culinary Delights</span>
+                <h2 class="section-title">Exquisite Dining & Menu</h2>
+                <div class="title-underline"></div>
+                <p class="section-description">Savor the flavors of our world-class cuisine and explore our diverse menu offerings</p>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="images/restaurant_interior.png" alt="Restaurant Interior">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/food_dish_1.png" alt="Gourmet Salmon Dish">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/menu_preview.png" alt="Restaurant Menu">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/food_dish_2.png" alt="Chocolate Lava Cake">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/dining_table_setup.png" alt="Table Setup">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/chef_cooking.png" alt="Chef Plating">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Full Width Dining Carousel -->
+        <div class="gallery-carousel-wrapper">
+            <div class="gallery-carousel" id="diningCarousel">
+                <div class="carousel-slide active" style="background-image: url('images/restaurant_interior.png');">
+                    <div class="slide-content">
+                        <h3>Fine Dining Ambiance</h3>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background-image: url('images/food_dish_1.png');">
+                    <div class="slide-content">
+                        <h3>Signature Dishes</h3>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background-image: url('images/menu_preview.png');">
+                    <div class="slide-content">
+                        <h3>Curated Menu</h3>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background-image: url('images/food_dish_2.png');">
+                    <div class="slide-content">
+                        <h3>Decadent Desserts</h3>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background-image: url('images/cocktail_drink.png');">
+                    <div class="slide-content">
+                        <h3>Handcrafted Cocktails</h3>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background-image: url('images/dining_table_setup.png');">
+                    <div class="slide-content">
+                        <h3>Elegant Settings</h3>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background-image: url('images/chef_cooking.png');">
+                    <div class="slide-content">
+                        <h3>Culinary Artistry</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="gallery-nav prev" id="diningPrev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="gallery-nav next" id="diningNext">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <div class="gallery-indicators">
+                <span class="dining-dot active" data-slide="0"></span>
+                <span class="dining-dot" data-slide="1"></span>
+                <span class="dining-dot" data-slide="2"></span>
+                <span class="dining-dot" data-slide="3"></span>
+                <span class="dining-dot" data-slide="4"></span>
+                <span class="dining-dot" data-slide="5"></span>
+                <span class="dining-dot" data-slide="6"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Guest Reviews</span>
+                <h2 class="section-title">What Our Guests Say</h2>
+                <div class="title-underline"></div>
+                <p class="section-description">Real experiences from verified guests who stayed with us</p>
+            </div>
+            
+            <div class="testimonials-carousel">
+                <!-- Testimonial 1 - Business Traveler -->
+                <div class="testimonial-card active">
+                    <div class="testimonial-header">
+                        <div class="author-section">
+                            <img src="images/guest1.png" alt="Rajesh Patel" class="guest-photo">
+                            <div class="author-details">
+                                <h4>Rajesh Patel <i class="fas fa-check-circle verified"></i></h4>
+                                <p class="guest-type">Business Traveler</p>
+                                <div class="review-meta">
+                                    <span class="stay-date"><i class="far fa-calendar"></i> Nov 2025</span>
+                                    <span class="room-type"><i class="fas fa-door-open"></i> Deluxe Suite</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="platform-badge google">
+                            <i class="fab fa-google"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text"><i class="fas fa-quote-left quote-icon"></i>Exceptional hospitality! Stayed here during a 3-day business conference. The conference room facilities were top-notch, and my Deluxe Suite was incredibly comfortable. Special mention to Priya at the front desk who arranged my early check-in without hassle. The rooftop restaurant's breakfast spread is unmatched!<i class="fas fa-quote-right quote-icon"></i></p>
+                </div>
+                
+                <!-- Testimonial 2 - Wedding Couple -->
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="author-section">
+                            <div class="guest-photo avatar-initials couple-avatar">
+                                <span>A&K</span>
+                            </div>
+                            <div class="author-details">
+                                <h4>Ananya & Karthik <i class="fas fa-check-circle verified"></i></h4>
+                                <p class="guest-type">Wedding Celebration</p>
+                                <div class="review-meta">
+                                    <span class="stay-date"><i class="far fa-calendar"></i> Oct 2025</span>
+                                    <span class="room-type"><i class="fas fa-door-open"></i> Honeymoon Suite</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="platform-badge booking">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text"><i class="fas fa-quote-left quote-icon"></i>Our dream wedding came true at Hotel Ortus! From the initial planning with their event team to the actual day, everything was flawless. The banquet hall decorations exceeded our expectations, and our 150 guests couldn't stop praising the food. The honeymoon suite was beautifully decorated with rose petals and champagne. Worth every rupee!<i class="fas fa-quote-right quote-icon"></i></p>
+                </div>
+                
+                <!-- Testimonial 3 - Family Vacation -->
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="author-section">
+                            <div class="guest-photo avatar-initials family-avatar">
+                                <span>SF</span>
+                            </div>
+                            <div class="author-details">
+                                <h4>Sharma Family <i class="fas fa-check-circle verified"></i></h4>
+                                <p class="guest-type">Family Vacation</p>
+                                <div class="review-meta">
+                                    <span class="stay-date"><i class="far fa-calendar"></i> Dec 2025</span>
+                                    <span class="room-type"><i class="fas fa-door-open"></i> Family Suite</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="platform-badge tripadvisor">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text"><i class="fas fa-quote-left quote-icon"></i>Perfect family getaway! Traveled with kids (ages 6 and 9) and elderly parents. The staff was patient and helpful, especially with my parents' mobility needs. The kids loved the swimming pool! Rooms were spacious enough for all of us. Chef Amit's Rajasthani thali was the highlight of our culinary experience. Highly recommend for families!<i class="fas fa-quote-right quote-icon"></i></p>
+                </div>
+                
+                <!-- Testimonial 4 - Solo Traveler -->
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="author-section">
+                            <div class="guest-photo avatar-initials solo-avatar">
+                                <span>SM</span>
+                            </div>
+                            <div class="author-details">
+                                <h4>Sarah Mitchell <i class="fas fa-check-circle verified"></i></h4>
+                                <p class="guest-type">Solo Traveler</p>
+                                <div class="review-meta">
+                                    <span class="stay-date"><i class="far fa-calendar"></i> Nov 2025</span>
+                                    <span class="room-type"><i class="fas fa-door-open"></i> Superior Room</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="platform-badge google">
+                            <i class="fab fa-google"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text"><i class="fas fa-quote-left quote-icon"></i>Safe, clean, and welcoming! As a solo female traveler exploring Rajasthan, I felt completely secure here. The concierge Vikram helped me plan amazing day trips to local attractions. The rooftop lounge became my favorite spot for evening chai. Strong WiFi made remote work seamless. Will definitely return!<i class="fas fa-quote-right quote-icon"></i></p>
+                </div>
+                
+                <!-- Testimonial 5 - Anniversary Celebration -->
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="author-section">
+                            <div class="guest-photo avatar-initials anniversary-avatar">
+                                <span>AG</span>
+                            </div>
+                            <div class="author-details">
+                                <h4>Gupta Anniversary <i class="fas fa-check-circle verified"></i></h4>
+                                <p class="guest-type">25th Anniversary</p>
+                                <div class="review-meta">
+                                    <span class="stay-date"><i class="far fa-calendar"></i> Oct 2025</span>
+                                    <span class="room-type"><i class="fas fa-door-open"></i> Presidential Suite</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="platform-badge booking">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text"><i class="fas fa-quote-left quote-icon"></i>Celebrated our 25th anniversary here - absolutely magical! The hotel team surprised us with a complimentary cake and room upgrade to their Presidential Suite. The attention to detail was remarkable. Rajesh (GM) personally ensured everything was perfect. The candlelight dinner arrangement was romantic and intimate. An unforgettable experience!<i class="fas fa-quote-right quote-icon"></i></p>
+                </div>
+            </div>
+            
+            <div class="testimonials-navigation">
+                <button class="testimonial-nav prev" id="testimonialPrev" aria-label="Previous testimonial">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="testimonial-dots">
+                    <span class="dot active" data-index="0"></span>
+                    <span class="dot" data-index="1"></span>
+                    <span class="dot" data-index="2"></span>
+                    <span class="dot" data-index="3"></span>
+                    <span class="dot" data-index="4"></span>
+                </div>
+                <button class="testimonial-nav next" id="testimonialNext" aria-label="Next testimonial">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hotel Staff Section -->
+    <section class="hotel-staff" id="staff">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Meet Our Team</span>
+                <h2 class="section-title">Our Hotel Staff</h2>
+                <div class="title-underline"></div>
+                <p class="section-description">Dedicated professionals committed to making your stay exceptional</p>
+            </div>
+            
+            <div class="staff-grid">
+                <div class="staff-card">
+                    <div class="staff-photo-wrapper">
+                        <img src="images/staff_manager.png" alt="Hotel Manager" class="staff-photo">
+                        <div class="staff-badge">
+                            <i class="fas fa-award"></i>
+                        </div>
+                    </div>
+                    <div class="staff-info">
+                        <h4>Rajesh Kumar</h4>
+                        <p class="staff-role">General Manager</p>
+                        <p class="staff-description">Leading with 15+ years of hospitality excellence</p>
+                    </div>
+                </div>
+                
+                <div class="staff-card">
+                    <div class="staff-photo-wrapper">
+                        <img src="images/staff_receptionist.png" alt="Receptionist" class="staff-photo">
+                        <div class="staff-badge">
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="staff-info">
+                        <h4>Priya Sharma</h4>
+                        <p class="staff-role">Front Desk Manager</p>
+                        <p class="staff-description">Ensuring your warm welcome and smooth check-in</p>
+                    </div>
+                </div>
+                
+                <div class="staff-card">
+                    <div class="staff-photo-wrapper">
+                        <img src="images/staff_chef.png" alt="Executive Chef" class="staff-photo">
+                        <div class="staff-badge">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                    </div>
+                    <div class="staff-info">
+                        <h4>Chef Amit Verma</h4>
+                        <p class="staff-role">Executive Chef</p>
+                        <p class="staff-description">Crafting culinary masterpieces for your delight</p>
+                    </div>
+                </div>
+                
+                <div class="staff-card">
+                    <div class="staff-photo-wrapper">
+                        <img src="images/staff_concierge.png" alt="Concierge" class="staff-photo">
+                        <div class="staff-badge">
+                            <i class="fas fa-concierge-bell"></i>
+                        </div>
+                    </div>
+                    <div class="staff-info">
+                        <h4>Vikram Singh</h4>
+                        <p class="staff-role">Concierge</p>
+                        <p class="staff-description">Your personal guide to the best experiences</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Welcome Hospitality Banner -->
+    <section class="welcome-strip">
+        <div class="welcome-strip-content">
+            <div class="welcome-strip-left">
+                <i class="fas fa-heart welcome-heart-icon"></i>
+                <span class="welcome-sanskrit">आतिथ्य देवो भव</span>
+            </div>
+            <div class="welcome-strip-center">
+                <h3>A Warm Welcome Awaits You</h3>
+                <p>Experience the Essence of Royal Hospitality at Hotel Ortus</p>
+            </div>
+            <div class="welcome-strip-right">
+                <i class="fas fa-crown welcome-crown-icon"></i>
+                <span class="welcome-family">— The Ortus Family</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Get In Touch</span>
+                <h2 class="section-title">Contact Us</h2>
+                <div class="title-underline"></div>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Visit Us</h3>
+                    <p>We'd love to hear from you. Reach out for reservations, inquiries, or just to say hello. Experience the finest hospitality in Kota.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-detail">
+                            <div class="detail-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="detail-text">
+                                <h4>Location</h4>
+                                <p>Plot No - 2 & 3, Near Esi Hospital,<br>Vigyan Nagar,<br>Kota (Rajasthan), India</p>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Ortus+Hotel+Kota" target="_blank" class="direction-link">
+                                    Get Directions <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-detail">
+                            <div class="detail-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="detail-text">
+                                <h4>Phone</h4>
+                                <p><a href="tel:XXXXXXX">XXXXXXX</a></p>
+                                <p><a href="tel:XXXXXXX">XXXXXXX</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-detail">
+                            <div class="detail-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="detail-text">
+                                <h4>Email</h4>
+                                <p><a href="mailto:XXXXXXX">XXXXXXX</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-detail">
+                            <div class="detail-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="detail-text">
+                                <h4>Reception Hours</h4>
+                                <p>24/7 Available</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-connect">
+                        <h4>Connect With Us</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-right-column">
+                    <div class="contact-form-wrapper">
+                        <h3>Send us a Message</h3>
+                        <form class="contact-form" id="contactForm">
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" required placeholder=" ">
+                                <label for="name">Your Name</label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" required placeholder=" ">
+                                <label for="email">Email Address</label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="tel" id="phone" name="phone" required placeholder=" ">
+                                <label for="phone">Phone Number</label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="text" id="subject" name="subject" required placeholder=" ">
+                                <label for="subject">Subject</label>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <textarea id="message" name="message" rows="4" required placeholder=" "></textarea>
+                                <label for="message">Your Message</label>
+                            </div>
+                            
+                            <button type="submit" class="btn-submit">
+                                Send Message
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3611.234567890123!2d75.8!3d25.2!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDEyJzAwLjAiTiA3NcKwNDgnMDAuMCJF!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <!-- Our Partners Text (Top of Footer) -->
+            <div class="footer-partners">
+                <p>
+                    <i class="fas fa-handshake"></i>
+                    <strong>Our Partners:</strong> 
+                    Goibibo • MakeMyTrip • Booking.com • OYO • Agoda
+                </p>
+            </div>
+            
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>
+                        <i class="fas fa-crown"></i>
+                        HOTEL ORTUS
+                    </h3>
+                    <p>Experience luxury living with spectacular hospitality and finest facilities in Vigyan Nagar, Kota.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#rooms">Rooms</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="#services">Accommodation</a></li>
+                        <li><a href="#services">Banquet Halls</a></li>
+                        <li><a href="#services">Catering</a></li>
+                        <li><a href="#services">Fine Dining</a></li>
+                        <li><a href="#services">Event Planning</a></li>
+                        <li><a href="#services">Room Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Plot No - 2 & 3, Near Esi Hospital, Vigyan Nagar, Kota (Rajasthan), India</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span><a href="tel:XXXXXXX">XXXXXXX</a></span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span><a href="tel:XXXXXXX">XXXXXXX</a></span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span><a href="mailto:XXXXXXX">XXXXXXX</a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hotel Ortus. All rights reserved. | 
+                    <a href="policies/privacy-policy.html">Privacy Policy</a> | 
+                    <a href="policies/terms-conditions.html">Terms & Conditions</a> | 
+                    <a href="policies/cancellation-policy.html">Cancellation Policy</a> | 
+                    <a href="policies/hotel-policies.html">Hotel Policies</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sign In Modal -->
+    <div class="auth-modal" id="signInModal">
+        <div class="modal-overlay" onclick="closeModal('signInModal')"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('signInModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-header">
+                <i class="fas fa-crown modal-icon"></i>
+                <h2>Welcome Back</h2>
+                <p>Sign in to your account</p>
+            </div>
+            
+            <form class="auth-form" id="signInForm">
+                <div class="form-group-auth">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="signInEmail" placeholder="Email Address" required>
+                </div>
+                
+                <div class="form-group-auth">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="signInPassword" placeholder="Password" required>
+                </div>
+                
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="btn-auth-submit">
+                    Sign In
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <div class="auth-divider">
+                    <span>or continue with</span>
+                </div>
+                
+                <div class="social-auth">
+                    <button type="button" class="btn-social google" id="googleSignInBtn">
+                        <i class="fab fa-google"></i>
+                        Sign in with Google
+                    </button>
+                    <button type="button" class="btn-social facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        Facebook
+                    </button>
+                </div>
+                
+                <p class="auth-switch">
+                    Don't have an account? 
+                    <a href="#" onclick="switchModal('signInModal', 'signUpModal'); return false;">Sign Up</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div class="auth-modal" id="signUpModal">
+        <div class="modal-overlay" onclick="closeModal('signUpModal')"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('signUpModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-header">
+                <i class="fas fa-crown modal-icon"></i>
+                <h2>Create Account</h2>
+                <p>Join Hotel Ortus family</p>
+            </div>
+            
+            <form class="auth-form" id="signUpForm">
+                <div class="form-group-auth">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="signUpName" placeholder="Full Name" required>
+                </div>
+                
+                <div class="form-group-auth">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="signUpEmail" placeholder="Email Address" required>
+                </div>
+                
+                <div class="form-group-auth">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" id="signUpPhone" placeholder="Phone Number" required>
+                </div>
+                
+                <div class="form-group-auth">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="signUpPassword" placeholder="Password" required>
+                </div>
+                
+                <div class="form-group-auth">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="signUpConfirmPassword" placeholder="Confirm Password" required>
+                </div>
+                
+                <label class="terms-checkbox">
+                    <input type="checkbox" id="acceptTerms" required>
+                    <span>I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></span>
+                </label>
+                
+                <button type="submit" class="btn-auth-submit">
+                    Create Account
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <div class="auth-divider">
+                    <span>or continue with</span>
+                </div>
+                
+                <div class="social-auth">
+                    <button type="button" class="btn-social google" id="googleSignUpBtn">
+                        <i class="fab fa-google"></i>
+                        Sign up with Google
+                    </button>
+                    <button type="button" class="btn-social facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        Facebook
+                    </button>
+                </div>
+                
+                <p class="auth-switch">
+                    Already have an account? 
+                    <a href="#" onclick="switchModal('signUpModal', 'signInModal'); return false;">Sign In</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

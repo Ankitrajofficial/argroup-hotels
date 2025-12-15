@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Environment variables (keep secret!)
+.env
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo

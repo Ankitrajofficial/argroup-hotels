@@ -1,0 +1,543 @@
+/* ===================================
+   COMPACT ROOM DETAILS PAGE - MOBILE FIRST
+   =================================== */
+
+/* Room Header - Compact */
+.room-header {
+  background: white;
+  padding: 6rem 0 2rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.room-title-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.room-title-section h1 {
+  font-family: var(--font-heading);
+  color: var(--primary-navy);
+  font-size: 2rem;
+  margin: 0;
+}
+
+.room-price {
+  font-size: 2rem;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+.room-price span {
+  font-size: 1rem;
+  color: #6c757d;
+  font-weight: 400;
+}
+
+.room-specs {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  color: #495057;
+  font-size: 0.95rem;
+}
+
+.room-specs span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.room-specs i {
+  color: var(--accent-gold);
+}
+
+/* 4 Carousels Section */
+.room-galleries {
+  padding: 2rem 0;
+  background: #f8f9fa;
+}
+
+.gallery-section {
+  margin-bottom: 2rem;
+}
+
+.gallery-section h3 {
+  font-family: var(--font-heading);
+  color: var(--primary-navy);
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gallery-section h3 i {
+  color: var(--accent-gold);
+}
+
+.carousel-wrapper {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-carousel {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+
+.carousel-item {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-item.active {
+  display: block;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.carousel-btn:hover {
+  background: var(--accent-gold);
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-btn.prev {
+  left: 1rem;
+}
+
+.carousel-btn.next {
+  right: 1rem;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.carousel-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dots .dot.active {
+  background: var(--accent-gold);
+  width: 24px;
+  border-radius: 5px;
+}
+
+/* Room Info Card - Compact */
+.room-info {
+  padding: 2rem 0;
+}
+
+.info-card {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.info-card h2 {
+  font-family: var(--font-heading);
+  color: var(--primary-navy);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.info-card p {
+  color: #495057;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.amenities-compact {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.amenities-compact span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.amenities-compact i {
+  color: var(--accent-gold);
+  font-size: 1.1rem;
+}
+
+/* BOOKING SECTION - Easy Access */
+.booking-section {
+  padding: 3rem 0;
+  background: white;
+}
+
+.booking-section h2 {
+  font-family: var(--font-heading);
+  color: var(--primary-navy);
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Primary: Direct Call */
+.booking-primary {
+  margin-bottom: 2rem;
+}
+
+.call-to-action {
+  background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  color: white;
+}
+
+.cta-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.cta-content i {
+  font-size: 2.5rem;
+  color: var(--accent-gold);
+}
+
+.cta-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.cta-content p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.phone-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.phone-btn {
+  flex: 1;
+  min-width: 200px;
+  background: var(--accent-gold);
+  color: #1a237e;
+  padding: 1rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.phone-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.phone-btn.secondary {
+  background: white;
+  color: var(--accent-gold);
+}
+
+/* OR Divider */
+.or-divider {
+  text-align: center;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.or-divider::before,
+.or-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: #dee2e6;
+}
+
+.or-divider::before {
+  left: 0;
+}
+
+.or-divider::after {
+  right: 0;
+}
+
+.or-divider span {
+  background: white;
+  padding: 0 1rem;
+  color: #6c757d;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Platform Buttons - Easy Access */
+.booking-platforms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.platform-btn {
+  background: white;
+  padding: 1.25rem 1rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.platform-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.platform-btn i {
+  font-size: 2.5rem;
+  transition: transform 0.3s ease;
+}
+
+.platform-btn span {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.platform-btn.goibibo {
+  border-color: #ee2a24;
+}
+
+.platform-btn.goibibo i,
+.platform-btn.goibibo span {
+  color: #ee2a24;
+}
+
+.platform-btn.goibibo:hover {
+  background: #ee2a24;
+  border-color: #ee2a24;
+}
+
+.platform-btn.goibibo:hover i,
+.platform-btn.goibibo:hover span {
+  color: white;
+}
+
+.platform-btn.booking {
+  border-color: #003580;
+}
+
+.platform-btn.booking i,
+.platform-btn.booking span {
+  color: #003580;
+}
+
+.platform-btn.booking:hover {
+  background: #003580;
+  border-color: #003580;
+}
+
+.platform-btn.booking:hover i,
+.platform-btn.booking:hover span {
+  color: white;
+}
+
+.platform-btn.makemytrip {
+  border-color: #e7332b;
+}
+
+.platform-btn.makemytrip i,
+.platform-btn.makemytrip span {
+  color: #e7332b;
+}
+
+.platform-btn.makemytrip:hover {
+  background: #e7332b;
+  border-color: #e7332b;
+}
+
+.platform-btn.makemytrip:hover i,
+.platform-btn.makemytrip:hover span {
+  color: white;
+}
+
+.platform-btn.agoda {
+  border-color: #00b4cc;
+}
+
+.platform-btn.agoda i,
+.platform-btn.agoda span {
+  color: #00b4cc;
+}
+
+.platform-btn.agoda:hover {
+  background: #00b4cc;
+  border-color: #00b4cc;
+}
+
+.platform-btn.agoda:hover i,
+.platform-btn.agoda:hover span {
+  color: white;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .room-header {
+    padding: 5rem 0 1.5rem 0;
+  }
+
+  .room-title-section h1 {
+    font-size: 1.75rem;
+  }
+
+  .room-price {
+    font-size: 1.75rem;
+  }
+
+  .room-specs {
+    gap: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .gallery-section h3 {
+    font-size: 1.1rem;
+  }
+
+  .carousel-btn {
+    width: 35px;
+    height: 35px;
+  }
+
+  .carousel-btn.prev {
+    left: 0.5rem;
+  }
+
+  .carousel-btn.next {
+    right: 0.5rem;
+  }
+
+  .info-card {
+    padding: 1.5rem;
+  }
+
+  .amenities-compact {
+    grid-template-columns: 1fr;
+  }
+
+  .call-to-action {
+    padding: 1.5rem;
+  }
+
+  .cta-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .phone-buttons {
+    flex-direction: column;
+  }
+
+  .phone-btn {
+    min-width: auto;
+  }
+
+  .booking-platforms {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .platform-btn {
+    padding: 1rem 0.75rem;
+  }
+
+  .platform-btn i {
+    font-size: 2rem;
+  }
+
+  .platform-btn span {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .room-title-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .room-specs {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .booking-platforms {
+    grid-template-columns: 1fr;
+  }
+
+  .platform-btn {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 1.25rem;
+  }
+
+  .platform-btn i {
+    font-size: 2.5rem;
+  }
+}

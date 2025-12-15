@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Hotel Ortus</title>
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
+    <!-- Google Fonts - with display swap for faster rendering -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Cinzel:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Admin-specific styles only (removed heavy main styles.css) -->
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body class="admin-body">
+    <!-- Admin Navigation -->
+    <nav class="admin-navbar">
+      <div class="admin-nav-container">
+        <div class="admin-brand">
+          <i class="fas fa-crown"></i>
+          <span>HOTEL NAYARA</span>
+          <span class="admin-badge">ADMIN</span>
+        </div>
+        <div class="admin-nav-actions">
+          <button
+            id="themeToggle"
+            class="theme-toggle-btn"
+            title="Toggle Theme"
+          >
+            <i class="fas fa-sun" id="themeIconLight"></i>
+            <i class="fas fa-moon" id="themeIconDark"></i>
+          </button>
+          <a href="../index.html" class="admin-nav-link">
+            <i class="fas fa-home"></i>
+            <span>View Site</span>
+          </a>
+          <button id="adminLogout" class="admin-logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Welcome Header -->
+      <div class="admin-header">
+        <h1><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
+        <p>Welcome back, <span id="adminName">Admin</span>!</p>
+      </div>
+
+      <!-- Category Navigation Buttons -->
+      <div class="admin-category-nav">
+        <button class="category-btn active" data-section="bookings">
+          <i class="fas fa-calendar-alt"></i>
+          <span>Bookings</span>
+          <span class="category-badge" id="bookingsBadge">0</span>
+        </button>
+        <button class="category-btn" data-section="contacts">
+          <i class="fas fa-envelope"></i>
+          <span>Contact Us</span>
+          <span class="category-badge" id="contactsBadge">0</span>
+        </button>
+        <button class="category-btn" data-section="users">
+          <i class="fas fa-users"></i>
+          <span>Users</span>
+          <span class="category-badge" id="usersBadge">0</span>
+        </button>
+        <button class="category-btn" data-section="settings">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </button>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon users">
+            <i class="fas fa-users"></i>
+          </div>
+
+          <div class="stat-info">
+            <h3 id="totalUsers">0</h3>
+            <p>Total Users</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon admins">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <div class="stat-info">
+            <h3 id="totalAdmins">0</h3>
+            <p>Admins</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon regular">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="stat-info">
+            <h3 id="regularUsers">0</h3>
+            <p>Regular Users</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon today">
+            <i class="fas fa-user-plus"></i>
+          </div>
+          <div class="stat-info">
+            <h3 id="newToday">0</h3>
+            <p>New Today</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users Table Section -->
+      <div
+        class="users-section admin-section"
+        id="usersSection"
+        style="display: none"
+      >
+        <div class="section-header">
+          <h2><i class="fas fa-list"></i> All Users</h2>
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search users..." />
+          </div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="table-container">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th>Joined</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <!-- Users will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+          <!-- Pagination will be loaded here -->
+        </div>
+      </div>
+
+      <!-- Contact Queries Section -->
+      <div
+        class="contacts-section admin-section"
+        id="contactsSection"
+        style="display: none"
+      >
+        <div class="section-header">
+          <h2>
+            <i class="fas fa-envelope"></i> Contact Queries
+            <span class="pending-badge" id="pendingBadge">0</span>
+          </h2>
+          <div class="search-box contact-search">
+            <i class="fas fa-search"></i>
+            <input
+              type="text"
+              id="contactSearchInput"
+              placeholder="Search by name or email..."
+            />
+          </div>
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-status="all">All</button>
+            <button class="filter-tab" data-status="pending">Pending</button>
+            <button class="filter-tab" data-status="in-progress">
+              In Progress
+            </button>
+            <button class="filter-tab" data-status="resolved">Resolved</button>
+          </div>
+        </div>
+
+        <!-- Contact Stats -->
+        <div class="contact-stats">
+          <div class="contact-stat pending">
+            <span class="stat-num" id="contactPending">0</span>
+            <span class="stat-label">Pending</span>
+          </div>
+          <div class="contact-stat in-progress">
+            <span class="stat-num" id="contactInProgress">0</span>
+            <span class="stat-label">In Progress</span>
+          </div>
+          <div class="contact-stat resolved">
+            <span class="stat-num" id="contactResolved">0</span>
+            <span class="stat-label">Resolved</span>
+          </div>
+          <div class="contact-stat today">
+            <span class="stat-num" id="contactToday">0</span>
+            <span class="stat-label">Today</span>
+          </div>
+        </div>
+
+        <!-- Contacts Table -->
+        <div class="table-container">
+          <table class="contacts-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Subject</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="contactsTableBody">
+              <!-- Contacts will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Contact Pagination -->
+        <div class="pagination" id="contactPagination">
+          <!-- Pagination will be loaded here -->
+        </div>
+      </div>
+
+      <!-- Room Bookings Section -->
+      <div class="bookings-section admin-section" id="bookingsSection">
+        <div class="section-header">
+          <h2>
+            <i class="fas fa-calendar-alt"></i> Room Bookings
+            <span class="pending-badge" id="bookingPendingBadge">0</span>
+          </h2>
+          <div class="search-box booking-search">
+            <i class="fas fa-search"></i>
+            <input
+              type="text"
+              id="bookingSearchInput"
+              placeholder="Search by guest name..."
+            />
+          </div>
+          <div class="filter-tabs" id="bookingFilterTabs">
+            <button class="filter-tab active" data-status="all">All</button>
+            <button class="filter-tab new-booking" data-status="upcoming">
+              New
+            </button>
+            <button class="filter-tab old-booking" data-status="past">
+              Old
+            </button>
+            <button class="filter-tab" data-status="pending">Pending</button>
+            <button class="filter-tab" data-status="confirmed">
+              Confirmed
+            </button>
+            <button class="filter-tab" data-status="completed">
+              Completed
+            </button>
+            <button class="filter-tab" data-status="cancelled">
+              Cancelled
+            </button>
+            <button class="filter-tab archived-tab" data-status="archived">
+              <i class="fas fa-archive"></i> Archived
+              <span class="archived-badge" id="archivedCountBadge">0</span>
+            </button>
+          </div>
+          <div class="date-filter-container">
+            <label for="bookingDateFilter"
+              ><i class="fas fa-calendar-day"></i
+            ></label>
+            <input
+              type="date"
+              id="bookingDateFilter"
+              class="date-filter-input"
+              title="Filter by date"
+            />
+            <button
+              id="clearDateFilter"
+              class="clear-date-btn"
+              title="Clear date filter"
+            >
+              <i class="fas fa-times"></i> Clear
+            </button>
+          </div>
+        </div>
+
+        <!-- Booking Stats -->
+        <div class="contact-stats">
+          <div class="contact-stat pending">
+            <span class="stat-num" id="bookingPending">0</span>
+            <span class="stat-label">Pending</span>
+          </div>
+          <div class="contact-stat in-progress">
+            <span class="stat-num" id="bookingConfirmed">0</span>
+            <span class="stat-label">Confirmed</span>
+          </div>
+          <div class="contact-stat resolved">
+            <span class="stat-num" id="bookingCompleted">0</span>
+            <span class="stat-label">Completed</span>
+          </div>
+          <div class="contact-stat today">
+            <span class="stat-num" id="bookingToday">0</span>
+            <span class="stat-label">Today</span>
+          </div>
+          <div class="contact-stat payment-stat">
+            <span class="stat-num" id="todayCollection">₹0</span>
+            <span class="stat-label">Today's Collection</span>
+          </div>
+        </div>
+
+        <!-- Bookings Table -->
+        <div class="table-container">
+          <table class="contacts-table">
+            <thead>
+              <tr>
+                <th>Guest</th>
+                <th>Room</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Guests</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="bookingsTableBody">
+              <!-- Bookings will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Booking Pagination -->
+        <div class="pagination" id="bookingPagination">
+          <!-- Pagination will be loaded here -->
+        </div>
+      </div>
+
+        <!-- Settings Section -->
+        <div class="settings-section admin-section" id="settingsSection" style="display: none;">
+            <div class="section-header">
+                <h2><i class="fas fa-cog"></i> Site Settings</h2>
+            </div>
+
+            <div class="settings-grid">
+                <!-- Offer Settings Card -->
+                <div class="settings-card">
+                    <div class="settings-card-header">
+                        <h3><i class="fas fa-tags"></i> Offer Banner Settings</h3>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="offerEnabled" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-card-body">
+                        <div class="setting-group">
+                            <label for="offerName">Offer Name</label>
+                            <input type="text" id="offerName" placeholder="e.g., Winter Special" value="Special Offer">
+                        </div>
+                        <div class="setting-group">
+                            <label for="offerDiscount">Discount Percentage (%)</label>
+                            <input type="number" id="offerDiscount" min="1" max="100" value="30">
+                        </div>
+                        <div class="setting-group">
+                            <label for="offerDescription">Offer Description</label>
+                            <textarea id="offerDescription" rows="3" placeholder="Describe the offer...">Save up to 30% on your next stay • Free breakfast • Room upgrades available</textarea>
+                        </div>
+                        <div class="setting-group">
+                            <label for="offerExpiry">Expiry Date</label>
+                            <input type="date" id="offerExpiry">
+                        </div>
+                        <div class="setting-group">
+                            <label for="offerImage">Offer Banner Image</label>
+                            <div class="image-upload-wrapper">
+                                <div class="image-preview" id="offerImagePreview">
+                                    <img src="../images/room1.png" alt="Offer preview" id="offerPreviewImg">
+                                </div>
+                                <div class="image-upload-controls">
+                                    <input type="file" id="offerImageInput" accept="image/*" style="display: none;">
+                                    <button type="button" class="btn-upload-image" id="chooseImageBtn">
+                                        <i class="fas fa-image"></i> Choose Image
+                                    </button>
+                                    <button type="button" class="btn-upload-image upload" id="uploadImageBtn" style="display: none;">
+                                        <i class="fas fa-upload"></i> Upload
+                                    </button>
+                                    <span class="upload-hint">JPG, PNG, WebP (Max 5MB)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Couple Section Settings Card -->
+                <div class="settings-card">
+                    <div class="settings-card-header">
+                        <h3><i class="fas fa-heart"></i> Couple Friendly Section</h3>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="coupleSectionEnabled" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-card-body">
+                        <p class="setting-description">
+                            <i class="fas fa-info-circle"></i>
+                            When enabled, the "Couple Friendly Hotel" section will be displayed on the main page. 
+                            When disabled, this section will be completely hidden from visitors.
+                        </p>
+                        <div class="setting-preview">
+                            <span class="preview-label">Current Status:</span>
+                            <span class="preview-status enabled" id="coupleStatusText">
+                                <i class="fas fa-check-circle"></i> Visible on Main Page
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save Button -->
+            <div class="settings-actions">
+                <button class="btn-save-settings" id="saveSettingsBtn">
+                    <i class="fas fa-save"></i>
+                    Save Settings
+                </button>
+                <span class="settings-saved-msg" id="settingsSavedMsg" style="display: none;">
+                    <i class="fas fa-check"></i> Settings saved successfully!
+                </span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Contact Detail Modal -->
+    <div class="modal-overlay" id="contactModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-envelope-open"></i> Query Details</h3>
+          <button class="modal-close" onclick="closeContactModal()">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body" id="contactModalBody">
+          <!-- Contact details will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Booking Detail Modal -->
+    <div class="modal-overlay" id="bookingModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fas fa-calendar-check"></i> Booking Details</h3>
+          <button class="modal-close" onclick="closeBookingModal()">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body" id="bookingModalBody">
+          <!-- Booking details will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loader"></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

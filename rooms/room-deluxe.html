@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deluxe Room - Hotel Ortus</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../room-simple.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-crown"></i>
+                <span class="brand-text">HOTEL ORTUS</span>
+            </div>
+            
+            <div class="nav-menu" id="navMenu">
+                <a href="../index.html#home" class="nav-link">Home</a>
+                <a href="../index.html#about" class="nav-link">About</a>
+                <a href="../index.html#services" class="nav-link">Services</a>
+                <a href="../booking.html" class="nav-link active">Rooms</a>
+                <a href="../index.html#testimonials" class="nav-link">Testimonials</a>
+                <a href="../index.html#contact" class="nav-link">Contact</a>
+            </div>
+            
+            <div class="nav-actions">
+                <a href="tel:XXXXXXX" class="nav-phone">
+                    <i class="fas fa-phone"></i>
+                </a>
+                <button class="btn-auth" id="signInBtn">
+                    <i class="fas fa-user"></i>
+                    <span>Sign In</span>
+                </button>
+                <button class="btn-primary" onclick="window.location.href='../booking.html'">
+                    Book Now
+                </button>
+            </div>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO CAROUSEL - Single Carousel with All Room Images -->
+    <section class="hero-carousel-section">
+        <div class="hero-carousel-wrapper">
+            <div class="hero-carousel" id="heroCarousel">
+                <div class="hero-slide active">
+                    <img src="../images/room1.png" alt="Bedroom View">
+                    <div class="slide-caption">Bedroom</div>
+                </div>
+                <div class="hero-slide">
+                    <img src="../images/room1.png" alt="Bathroom">
+                    <div class="slide-caption">Bathroom</div>
+                </div>
+                <div class="hero-slide">
+                    <img src="../images/room1.png" alt="Lounge Area">
+                    <div class="slide-caption">Lounge</div>
+                </div>
+                <div class="hero-slide">
+                    <img src="../images/room1.png" alt="Balcony View">
+                    <div class="slide-caption">Balcony</div>
+                </div>
+                <div class="hero-slide">
+                    <img src="../images/room1.png" alt="Dining Area">
+                    <div class="slide-caption">Dining</div>
+                </div>
+            </div>
+            
+            <button class="hero-nav-btn prev" onclick="moveHeroSlide(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="hero-nav-btn next" onclick="moveHeroSlide(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <div class="hero-dots" id="heroDots"></div>
+            
+            <!-- Room Title Overlay -->
+            <div class="room-title-overlay">
+                <div class="container">
+                    <div class="breadcrumb">
+                        <a href="../index.html">Home</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <a href="../booking.html">Rooms</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>Deluxe Room</span>
+                    </div>
+                    <h1>Deluxe Room</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING & DESCRIPTION SECTION -->
+    <section class="room-overview">
+        <div class="container">
+            <div class="overview-header">
+                <div class="price-section">
+                    <!-- Clickable Price Card - Book at ₹0 -->
+                    <a href="#bookingForm" class="price-tag price-tag-clickable">
+                        <div class="price-content">
+                            <span class="price-amount">₹3,500</span>
+                            <span class="price-period">/night</span>
+                        </div>
+                        <div class="price-call-cta">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Book at ₹0</span>
+                        </div>
+                        <span class="best-rate-badge">Best Rate Guaranteed</span>
+                    </a>
+                    <div class="room-specs">
+                        <span><i class="fas fa-ruler-combined"></i> 350 sq ft</span>
+                        <span><i class="fas fa-users"></i> 2 Guests</span>
+                        <span><i class="fas fa-bed"></i> King Bed</span>
+                    </div>
+                </div>
+                
+                <div class="description-section">
+                    <p>Elegantly designed rooms with modern amenities and stunning views. Perfect for couples and business travelers seeking comfort and sophistication.</p>
+                    
+                    <!-- Compact External Platforms (4 columns now) -->
+                    <div class="platforms-compact-grid">
+                        <a href="#" target="_blank" class="platform-btn-compact goibibo">
+                            <span><i class="fas fa-plane-departure"></i> Goibibo</span>
+                            <span class="btn-price">₹3,650</span>
+                        </a>
+                        <a href="#" target="_blank" class="platform-btn-compact booking">
+                            <span><i class="fas fa-bed"></i> Booking.com</span>
+                            <span class="btn-price">₹3,700</span>
+                        </a>
+                        <a href="#" target="_blank" class="platform-btn-compact mmt">
+                            <span><i class="fas fa-suitcase-rolling"></i> MakeMyTrip</span>
+                            <span class="btn-price">₹3,680</span>
+                        </a>
+                        <a href="#" target="_blank" class="platform-btn-compact agoda">
+                            <span><i class="fas fa-hotel"></i> Agoda</span>
+                            <span class="btn-price">₹3,720</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOOK AT ₹0 SECTION -->
+    <section class="booking-form-section" id="bookingForm">
+        <div class="container">
+            <div class="booking-form-card">
+                <div class="form-header">
+                    <i class="fas fa-gift"></i>
+                    <h2>Book at ₹0</h2>
+                    <p>No payment required now • Pay at hotel • Free cancellation</p>
+                </div>
+                
+                <form id="roomBookingForm" class="booking-form">
+                    <input type="hidden" name="roomType" value="Deluxe Room">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookingName"><i class="fas fa-user"></i> Full Name *</label>
+                            <input type="text" id="bookingName" name="name" required placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingEmail"><i class="fas fa-envelope"></i> Email *</label>
+                            <input type="email" id="bookingEmail" name="email" required placeholder="yourname@email.com">
+                            <span class="field-error" id="emailError"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookingPhone"><i class="fas fa-phone"></i> Phone *</label>
+                            <div class="phone-input-group">
+                                <select id="countryCode" name="countryCode" class="country-code-select">
+                                    <option value="+91">🇮🇳 +91</option>
+                                    <option value="+1">🇺🇸 +1</option>
+                                    <option value="+44">🇬🇧 +44</option>
+                                    <option value="+971">🇦🇪 +971</option>
+                                    <option value="+65">🇸🇬 +65</option>
+                                    <option value="+61">🇦🇺 +61</option>
+                                    <option value="+81">🇯🇵 +81</option>
+                                    <option value="+86">🇨🇳 +86</option>
+                                </select>
+                                <input type="tel" id="bookingPhone" name="phone" required placeholder="10-digit number" maxlength="10" pattern="[0-9]{10}">
+                            </div>
+                            <span class="field-error" id="phoneError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingGuests"><i class="fas fa-users"></i> Guests</label>
+                            <select id="bookingGuests" name="guests">
+                                <option value="1">1 Guest</option>
+                                <option value="2" selected>2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4">4 Guests</option>
+                                <option value="5">5 Guests</option>
+                                <option value="6">6 Guests</option>
+                                <option value="7">7 Guests</option>
+                                <option value="8">8 Guests</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookingCheckIn"><i class="fas fa-calendar-plus"></i> Check-In *</label>
+                            <input type="date" id="bookingCheckIn" name="checkIn" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingCheckOut"><i class="fas fa-calendar-minus"></i> Check-Out *</label>
+                            <input type="date" id="bookingCheckOut" name="checkOut" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="bookingRequests"><i class="fas fa-comment-dots"></i> Special Requests</label>
+                        <textarea id="bookingRequests" name="specialRequests" rows="3" placeholder="Any special requirements? (e.g., early check-in, extra bed, etc.)"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="booking-submit-btn" id="bookingSubmitBtn">
+                        <i class="fas fa-lock"></i>
+                        <span>Book Now at ₹0</span>
+                    </button>
+                </form>
+                
+                <div class="booking-success-message" id="bookingSuccess" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Booking Request Submitted!</h3>
+                    <p>We'll contact you shortly to confirm your reservation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROOM AMENITIES SECTION -->
+    <section class="amenities-section">
+        <div class="container">
+            <h2>Room Amenities</h2>
+            <div class="amenities-grid">
+                <div class="amenity-item">
+                    <i class="fas fa-wifi"></i>
+                    <span>Free WiFi</span>
+                </div>
+                <div class="amenity-item">
+                    <i class="fas fa-tv"></i>
+                    <span>Smart TV</span>
+                </div>
+                <div class="amenity-item">
+                    <i class="fas fa-snowflake"></i>
+                    <span>AC</span>
+                </div>
+                <div class="amenity-item">
+                    <i class="fas fa-temperature-low"></i>
+                    <span>Mini Fridge</span>
+                </div>
+                <div class="amenity-item">
+                    <i class="fas fa-bath"></i>
+                    <span>Premium Bath</span>
+                </div>
+                <div class="amenity-item">
+                    <i class="fas fa-concierge-bell"></i>
+                    <span>24/7 Service</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROOM-SPECIFIC GALLERY - Deluxe Room -->
+    <section class="gallery-carousels-section">
+        <div class="container">
+            <div class="section-header-center">
+                <h2>Deluxe Room Gallery</h2>
+                <p>Click any image to view fullscreen</p>
+            </div>
+            
+            <div class="three-carousels-grid">
+                <!-- Carousel 1: Deluxe Bedroom -->
+                <div class="mini-carousel-wrapper">
+                    <h3><i class="fas fa-bed"></i> Bedroom</h3>
+                    <div class="mini-carousel" id="bedroomGallery">
+                        <div class="mini-slide active" onclick="openFullscreen(this)">
+                            <img src="../images/room1.png" alt="Deluxe Bedroom View 1">
+                        </div>
+                        <div class="mini-slide" onclick="openFullscreen(this)">
+                            <img src="../images/room1.png" alt="Deluxe Bedroom View 2">
+                        </div>
+                        <div class="mini-slide" onclick="openFullscreen(this)">
+                            <img src="../images/room1.png" alt="Deluxe Bedroom View 3">
+                        </div>
+                    </div>
+                    <button class="mini-nav prev" onclick="moveMiniCarousel('bedroomGallery', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="mini-nav next" onclick="moveMiniCarousel('bedroomGallery', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="mini-dots" id="bedroomGalleryDots"></div>
+                </div>
+
+                <!-- Carousel 2: Deluxe Washroom -->
+                <div class="mini-carousel-wrapper">
+                    <h3><i class="fas fa-bath"></i> Washroom</h3>
+                    <div class="mini-carousel" id="washroomGallery">
+                        <div class="mini-slide active" onclick="openFullscreen(this)">
+                            <img src="../images/room1.png" alt="Deluxe Washroom View 1">
+                        </div>
+                        <div class="mini-slide" onclick="openFullscreen(this)">
+                            <img src="../images/room1.png" alt="Deluxe Washroom View 2">
+                        </div>
+                    </div>
+                    <button class="mini-nav prev" onclick="moveMiniCarousel('washroomGallery', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="mini-nav next" onclick="moveMiniCarousel('washroomGallery', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="mini-dots" id="washroomGalleryDots"></div>
+                </div>
+
+                <!-- Carousel 3: Balcony/View -->
+                <div class="mini-carousel-wrapper">
+                    <h3><i class="fas fa-window-maximize"></i> Balcony & View</h3>
+                    <div class="mini-carousel" id="balconyGallery">
+                        <div class="mini-slide active" onclick="openFullscreen(this)">
+                            <img src="../images/room1.png" alt="Deluxe Balcony View">
+                        </div>
+                        <div class="mini-slide" onclick="openFullscreen(this)">
+                            <img src="../images/room1.png" alt="Deluxe Room View">
+                        </div>
+                        <div class="mini-slide" onclick="openFullscreen(this)">
+                            <img src="../images/room1.png" alt="Deluxe Night View">
+                        </div>
+                    </div>
+                    <button class="mini-nav prev" onclick="moveMiniCarousel('balconyGallery', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="mini-nav next" onclick="moveMiniCarousel('balconyGallery', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="mini-dots" id="balconyGalleryDots"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fullscreen Lightbox -->
+    <div class="fullscreen-lightbox" id="fullscreenLightbox">
+        <button class="fullscreen-close" onclick="closeFullscreen()">
+            <i class="fas fa-times"></i>
+        </button>
+        <img src="" alt="Fullscreen view" id="fullscreenImage">
+    </div>
+
+    <!-- Welcome Strip Banner -->
+    <section class="welcome-strip">
+        <div class="welcome-strip-content">
+            <div class="welcome-strip-left">
+                <i class="fas fa-heart welcome-heart-icon"></i>
+                <span class="welcome-sanskrit">आतिथ्य देवो भव</span>
+            </div>
+            <div class="welcome-strip-center">
+                <h3>A Warm Welcome Awaits You</h3>
+                <p>Experience the Essence of Royal Hospitality at Hotel Ortus</p>
+            </div>
+            <div class="welcome-strip-right">
+                <i class="fas fa-crown welcome-crown-icon"></i>
+                <span class="welcome-family">— The Ortus Family</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Strip Section -->
+    <section class="contact-strip">
+        <div class="contact-strip-content">
+            <div class="contact-strip-item">
+                <a href="tel:XXXXXXX" class="contact-strip-link">
+                    <i class="fas fa-phone-alt"></i>
+                    <div class="contact-strip-text">
+                        <span class="contact-label">Call Us</span>
+                        <span class="contact-value">XXXXXXX</span>
+                    </div>
+                </a>
+            </div>
+            <div class="contact-strip-divider"></div>
+            <div class="contact-strip-item">
+                <a href="tel:XXXXXXX" class="contact-strip-link">
+                    <i class="fas fa-mobile-alt"></i>
+                    <div class="contact-strip-text">
+                        <span class="contact-label">WhatsApp</span>
+                        <span class="contact-value">XXXXXXX</span>
+                    </div>
+                </a>
+            </div>
+            <div class="contact-strip-divider"></div>
+            <div class="contact-strip-item">
+                <a href="mailto:XXXXXXX" class="contact-strip-link">
+                    <i class="fas fa-envelope"></i>
+                    <div class="contact-strip-text">
+                        <span class="contact-label">Email Us</span>
+                        <span class="contact-value">XXXXXXX</span>
+                    </div>
+                </a>
+            </div>
+            <div class="contact-strip-divider"></div>
+            <div class="contact-strip-item">
+                <a href="https://www.google.com/maps/search/?api=1&query=Ortus+Hotel+Kota" target="_blank" class="contact-strip-link">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div class="contact-strip-text">
+                        <span class="contact-label">Visit Us</span>
+                        <span class="contact-value">Vigyan Nagar, Kota, Rajasthan</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>
+                        <i class="fas fa-crown"></i>
+                        HOTEL ORTUS
+                    </h3>
+                    <p>Experience luxury living with spectacular hospitality and finest facilities in Vigyan Nagar, Kota.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html#home">Home</a></li>
+                        <li><a href="../index.html#about">About Us</a></li>
+                        <li><a href="../index.html#services">Services</a></li>
+                        <li><a href="../booking.html">Rooms</a></li>
+                        <li><a href="../index.html#testimonials">Testimonials</a></li>
+                        <li><a href="../index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Our Rooms</h4>
+                    <ul>
+                        <li><a href="room-deluxe.html">Deluxe Room</a></li>
+                        <li><a href="room-executive.html">Executive Suite</a></li>
+                        <li><a href="room-family.html">Family Room</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Plot No - 2 & 3, Near Esi Hospital, Vigyan Nagar, Kota (Rajasthan), India</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span><a href="tel:XXXXXXX">XXXXXXX</a></span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span><a href="tel:XXXXXXX">XXXXXXX</a></span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span><a href="mailto:XXXXXXX">XXXXXXX</a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hotel Ortus. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../script.js"></script>
+    <script>
+        // Hero Carousel
+        let currentHeroSlide = 0;
+        const heroSlides = document.querySelectorAll('.hero-slide');
+        const totalSlides = heroSlides.length;
+
+        // Initialize dots
+        function initHeroDots() {
+            const dotsContainer = document.getElementById('heroDots');
+            heroSlides.forEach((_, index) => {
+                const dot = document.createElement('span');
+                dot.className = 'dot' + (index === 0 ? ' active' : '');
+                dot.onclick = () => goToHeroSlide(index);
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function moveHeroSlide(direction) {
+            heroSlides[currentHeroSlide].classList.remove('active');
+            document.querySelectorAll('#heroDots .dot')[currentHeroSlide].classList.remove('active');
+            
+            currentHeroSlide += direction;
+            if (currentHeroSlide < 0) currentHeroSlide = totalSlides - 1;
+            if (currentHeroSlide >= totalSlides) currentHeroSlide = 0;
+            
+            heroSlides[currentHeroSlide].classList.add('active');
+            document.querySelectorAll('#heroDots .dot')[currentHeroSlide].classList.add('active');
+        }
+
+        function goToHeroSlide(index) {
+            heroSlides[currentHeroSlide].classList.remove('active');
+            document.querySelectorAll('#heroDots .dot')[currentHeroSlide].classList.remove('active');
+            
+            currentHeroSlide = index;
+            
+            heroSlides[currentHeroSlide].classList.add('active');
+            document.querySelectorAll('#heroDots .dot')[currentHeroSlide].classList.add('active');
+        }
+
+        // Auto-advance carousel
+        let autoSlide = setInterval(() => moveHeroSlide(1), 5000);
+
+        // Pause on hover
+        document.querySelector('.hero-carousel-wrapper').addEventListener('mouseenter', () => {
+            clearInterval(autoSlide);
+        });
+
+        document.querySelector('.hero-carousel-wrapper').addEventListener('mouseleave', () => {
+            autoSlide = setInterval(() => moveHeroSlide(1), 5000);
+        });
+
+        // Initialize
+        initHeroDots();
+
+        // Mini Carousels (3 room-specific galleries)
+        const miniCarousels = {
+            'bedroomGallery': 0,
+            'washroomGallery': 0,
+            'balconyGallery': 0
+        };
+
+        function initMiniCarousels() {
+            ['bedroomGallery', 'washroomGallery', 'balconyGallery'].forEach(id => {
+                const carousel = document.getElementById(id);
+                if (!carousel) return;
+                
+                const slides = carousel.querySelectorAll('.mini-slide');
+                const dotsContainer = document.getElementById(id + 'Dots');
+                
+                slides.forEach((_, index) => {
+                    const dot = document.createElement('span');
+                    dot.className = 'mini-dot' + (index === 0 ? ' active' : '');
+                    dot.onclick = () => goToMiniSlide(id, index);
+                    dotsContainer.appendChild(dot);
+                });
+            });
+        }
+
+        function moveMiniCarousel(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            const slides = carousel.querySelectorAll('.mini-slide');
+            const dots = document.querySelectorAll(`#${carouselId}Dots .mini-dot`);
+            
+            slides[miniCarousels[carouselId]].classList.remove('active');
+            dots[miniCarousels[carouselId]].classList.remove('active');
+            
+            miniCarousels[carouselId] += direction;
+            if (miniCarousels[carouselId] < 0) miniCarousels[carouselId] = slides.length - 1;
+            if (miniCarousels[carouselId] >= slides.length) miniCarousels[carouselId] = 0;
+            
+            slides[miniCarousels[carouselId]].classList.add('active');
+            dots[miniCarousels[carouselId]].classList.add('active');
+        }
+
+        function goToMiniSlide(carouselId, index) {
+            const carousel = document.getElementById(carouselId);
+            const slides = carousel.querySelectorAll('.mini-slide');
+            const dots = document.querySelectorAll(`#${carouselId}Dots .mini-dot`);
+            
+            slides[miniCarousels[carouselId]].classList.remove('active');
+            dots[miniCarousels[carouselId]].classList.remove('active');
+            
+            miniCarousels[carouselId] = index;
+            
+            slides[miniCarousels[carouselId]].classList.add('active');
+            dots[miniCarousels[carouselId]].classList.add('active');
+        }
+
+        // Fullscreen Lightbox Functions
+        function openFullscreen(element) {
+            const img = element.querySelector('img');
+            const lightbox = document.getElementById('fullscreenLightbox');
+            const lightboxImage = document.getElementById('fullscreenImage');
+            
+            lightboxImage.src = img.src;
+            lightboxImage.alt = img.alt;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFullscreen() {
+            const lightbox = document.getElementById('fullscreenLightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeFullscreen();
+            }
+        });
+
+        // Close on clicking outside image
+        document.getElementById('fullscreenLightbox')?.addEventListener('click', (e) => {
+            if (e.target.id === 'fullscreenLightbox') {
+                closeFullscreen();
+            }
+        });
+
+        // Initialize mini carousels
+        initMiniCarousels();
+
+        // ===================================
+        // Booking Form Functionality
+        // ===================================
+        
+        // Set minimum date for check-in (today)
+        const today = new Date().toISOString().split('T')[0];
+        const checkInInput = document.getElementById('bookingCheckIn');
+        const checkOutInput = document.getElementById('bookingCheckOut');
+        
+        if (checkInInput) {
+            checkInInput.min = today;
+            checkInInput.addEventListener('change', function() {
+                // Set check-out minimum to day after check-in
+                const checkInDate = new Date(this.value);
+                checkInDate.setDate(checkInDate.getDate() + 1);
+                checkOutInput.min = checkInDate.toISOString().split('T')[0];
+                
+                // Clear check-out if it's before new minimum
+                if (checkOutInput.value && new Date(checkOutInput.value) <= new Date(this.value)) {
+                    checkOutInput.value = '';
+                }
+            });
+        }
+        
+        // Email validation function
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Phone validation function (10 digits)
+        function validatePhone(phone) {
+            const cleanPhone = phone.replace(/\D/g, '');
+            return cleanPhone.length === 10;
+        }
+
+        // Real-time validation
+        const emailInput = document.getElementById('bookingEmail');
+        const phoneInput = document.getElementById('bookingPhone');
+        const emailError = document.getElementById('emailError');
+        const phoneError = document.getElementById('phoneError');
+
+        if (emailInput) {
+            emailInput.addEventListener('blur', function() {
+                if (this.value && !validateEmail(this.value)) {
+                    emailError.textContent = 'Please enter a valid email';
+                    this.classList.add('is-invalid');
+                    this.classList.remove('is-valid');
+                } else if (this.value) {
+                    emailError.textContent = '';
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                }
+            });
+        }
+
+        if (phoneInput) {
+            // Only allow numbers
+            phoneInput.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '').slice(0, 10);
+            });
+
+            phoneInput.addEventListener('blur', function() {
+                if (this.value && !validatePhone(this.value)) {
+                    phoneError.textContent = 'Please enter 10 digits';
+                    this.classList.add('is-invalid');
+                    this.classList.remove('is-valid');
+                } else if (this.value) {
+                    phoneError.textContent = '';
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                }
+            });
+        }
+
+        // Form submission
+        const bookingForm = document.getElementById('roomBookingForm');
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                // Validate before submit
+                const email = emailInput.value;
+                const phone = phoneInput.value;
+                let isValid = true;
+
+                if (!validateEmail(email)) {
+                    emailError.textContent = 'Please enter a valid email';
+                    emailInput.classList.add('is-invalid');
+                    isValid = false;
+                }
+
+                if (!validatePhone(phone)) {
+                    phoneError.textContent = 'Please enter 10 digits';
+                    phoneInput.classList.add('is-invalid');
+                    isValid = false;
+                }
+
+                if (!isValid) return;
+
+                const submitBtn = document.getElementById('bookingSubmitBtn');
+                const originalText = submitBtn.innerHTML;
+
+                // Show loading state
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Submitting...</span>';
+                submitBtn.disabled = true;
+
+                try {
+                    const formData = new FormData(this);
+                    const countryCode = formData.get('countryCode') || '+91';
+                    const data = {
+                        name: formData.get('name'),
+                        email: formData.get('email'),
+                        phone: countryCode + formData.get('phone'),
+                        roomType: formData.get('roomType'),
+                        checkIn: formData.get('checkIn'),
+                        checkOut: formData.get('checkOut'),
+                        guests: parseInt(formData.get('guests')),
+                        specialRequests: formData.get('specialRequests')
+                    };
+
+                    const response = await fetch('/api/booking', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        // Show success message
+                        this.style.display = 'none';
+                        document.getElementById('bookingSuccess').style.display = 'block';
+                    } else {
+                        alert(result.message || 'Error submitting booking. Please try again.');
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    }
+                } catch (error) {
+                    console.error('Booking error:', error);
+                    alert('Error submitting booking. Please try again or call us directly.');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+        }
+    </script>
+
+    <!-- Mobile Sticky Booking Bar -->
+    <div class="mobile-sticky-bar">
+        <div class="sticky-price">
+            <span class="sticky-amount">₹3,500</span>
+            <span class="sticky-period">/night</span>
+        </div>
+        <a href="#bookingForm" class="sticky-book-btn">
+            <i class="fas fa-calendar-check"></i>
+            Book at ₹0
+        </a>
+    </div>
+</body>
+</html>
