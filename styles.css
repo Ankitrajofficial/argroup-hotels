@@ -1069,11 +1069,11 @@ section {
 }
 
 .room-card {
-  background: var(--neutral-white);
+  background: linear-gradient(145deg, #1a1c20, #0d1116);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 2px solid #adb5bd;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   transition: var(--transition-medium);
   display: flex;
   flex-direction: column;
@@ -1082,7 +1082,7 @@ section {
 
 .room-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
   border-color: var(--accent-gold);
 }
 
@@ -1105,7 +1105,7 @@ section {
 .room-content h3 {
   font-family: var(--font-heading);
   font-size: 1.3rem;
-  color: #0a1929;
+  color: var(--neutral-white);
   margin-bottom: var(--spacing-sm);
   font-weight: 600;
 }
@@ -1115,6 +1115,7 @@ section {
   flex-wrap: wrap;
   gap: var(--spacing-xs);
   margin-bottom: var(--spacing-sm);
+  color: var(--neutral-light);
 }
 
 .room-feature {
@@ -1133,7 +1134,7 @@ section {
 }
 
 .room-content p {
-  color: #212529;
+  color: #e0e0e0;
   line-height: 1.6;
   margin-bottom: var(--spacing-sm);
   font-size: 0.9rem;
@@ -2786,10 +2787,22 @@ section {
 
   .about-text h3 {
     font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .about-text p {
+    text-align: center;
+  }
+
+  /* Reduce text length on mobile by hiding second paragraph */
+  .about-text p:nth-of-type(2) {
+    display: none;
   }
 
   .about-text h3::after {
     width: 40px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .about-image {
@@ -4049,6 +4062,126 @@ section {
     align-items: center;
     text-align: center;
   }
+}
+
+/* Mobile Collapsible Card Styling */
+@media (max-width: 768px) {
+  .special-notice {
+    height: 190px; /* approx 5cm */
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 1rem;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    padding: 1.5rem 1rem;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+  }
+
+  .special-notice.expanded {
+    height: auto;
+    padding-bottom: 2rem;
+  }
+  
+  .special-notice.expanded::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(to top, rgba(10, 25, 41, 0.9), transparent);
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  /* Fade out bottom effect when collapsed */
+  .special-notice:not(.expanded)::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: linear-gradient(to top, rgba(10, 25, 41, 1), transparent);
+    pointer-events: none;
+  }
+
+  .mobile-expand-indicator {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+    color: var(--accent-gold);
+    font-size: 0.9rem;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+    z-index: 5;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .mobile-expand-indicator i {
+    transition: transform 0.4s ease;
+  }
+
+  .special-notice.expanded .mobile-expand-indicator {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin: 1rem auto 0;
+    width: max-content;
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .special-notice.expanded .mobile-expand-indicator .expand-text {
+    display: none; /* Hide text when expanded, just show arrow or change text via JS if preferred */
+  }
+  
+  /* CSS-only text change - simple approach */
+  .special-notice.expanded .mobile-expand-indicator .expand-text::after {
+      content: "Show Less";
+      display: none; /* simple hide for not */
+  }
+
+  .special-notice.expanded .mobile-expand-indicator i {
+    transform: rotate(180deg);
+  }
+
+  .notice-header {
+    margin-bottom: 2.5rem; /* Make room for the button */
+    text-align: center;
+  }
+  
+  .special-notice.expanded .notice-header {
+      margin-bottom: 1rem;
+  }
+  
+  .notice-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .notice-tag-enhanced {
+    margin-bottom: 0.5rem;
+    padding: 0.4rem 1rem;
+  }
+}
+
+.mobile-expand-indicator {
+  display: none;
 }
 
 @media (max-width: 768px) {
@@ -5580,6 +5713,7 @@ section {
 
 /* Floating Cart */
 .floating-cart-btn {
+    display: none;
     position: fixed;
     bottom: 30px;
     right: 30px;
@@ -5587,7 +5721,6 @@ section {
     height: 60px;
     background: var(--accent-gold);
     border-radius: 50%;
-    display: flex;
     align-items: center;
     justify-content: center;
     color: white;
@@ -6105,3 +6238,72 @@ section {
 }
 
 
+
+/* ===================================
+   Mobile Sticky Action Buttons
+   =================================== */
+.mobile-sticky-actions {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Add padding to body to prevent content being hidden */
+  body {
+    padding-bottom: 80px;
+  }
+
+  .mobile-sticky-actions {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 25, 41, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 10px 15px;
+    z-index: 9999;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 15px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sticky-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 10px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .sticky-btn i {
+    font-size: 1.1rem;
+  }
+
+  .sticky-btn.book-now {
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-bronze));
+    color: var(--neutral-white);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  }
+
+  .sticky-btn.book-now:active {
+    transform: scale(0.98);
+  }
+
+  .sticky-btn.couple-special {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent-gold);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+  }
+  
+  .sticky-btn.couple-special:active {
+    background: rgba(212, 175, 55, 0.1);
+  }
+}

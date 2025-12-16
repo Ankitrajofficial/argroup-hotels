@@ -1981,3 +1981,14 @@ function escapeHtml(text) {
 }
 
 
+
+// ===================================
+// Couple Friendly Section Toggle
+// ===================================
+function toggleCoupleSection() {
+    const section = document.getElementById('coupleSection');
+    // Check if on mobile (screen width <= 768px)
+    if (window.innerWidth <= 768) {
+        section.classList.toggle('expanded');
+    }
+}

@@ -400,7 +400,7 @@
     </section>
 
     <!-- Couple Friendly & Privacy Section -->
-    <section class="special-notice" id="coupleSection">
+    <section class="special-notice" id="coupleSection" onclick="toggleCoupleSection()">
         <div class="container">
             <div class="notice-header">
                 <div class="notice-tag-enhanced">
@@ -411,6 +411,10 @@
                 </div>
                 <h2>A Safe & Welcoming Space for Everyone</h2>
                 <p class="notice-subtitle">Your privacy, comfort, and happiness matter to us</p>
+                <div class="mobile-expand-indicator">
+                    <span class="expand-text">Read More</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
             </div>
 
             <div class="notice-grid">
@@ -1420,6 +1424,16 @@
                 </p>
             </form>
         </div>
+    </div>
+
+    <!-- Mobile Sticky Actions -->
+    <div class="mobile-sticky-actions">
+        <a href="#room-booking" class="sticky-btn book-now">
+            <i class="fas fa-calendar-check"></i> Book Now
+        </a>
+        <a href="#coupleSection" class="sticky-btn couple-special" onclick="toggleCoupleSection()">
+            <i class="fas fa-heart"></i> Couple Special
+        </a>
     </div>
 
     <script src="script.js"></script>
