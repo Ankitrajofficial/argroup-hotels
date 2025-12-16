@@ -24,7 +24,7 @@
     />
 
     <!-- Admin-specific styles only (removed heavy main styles.css) -->
-    <link rel="stylesheet" href="admin.css" />
+    <link rel="stylesheet" href="admin.css?v=3" />
   </head>
   <body class="admin-body">
     <!-- Admin Navigation -->
@@ -430,6 +430,86 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Add Menu Item Card -->
+                <div class="settings-card">
+                    <div class="settings-card-header">
+                        <h3><i class="fas fa-utensils"></i> Add Menu Item</h3>
+                    </div>
+                    <div class="settings-card-body">
+                        <form id="settingsMenuForm" class="add-menu-form">
+                            <div class="form-row">
+                                <div class="setting-group">
+                                    <label for="newItemName">Item Name *</label>
+                                    <input type="text" id="newItemName" placeholder="e.g., Butter Chicken" required>
+                                </div>
+                                <div class="setting-group">
+                                    <label for="newItemCategory">Category *</label>
+                                    <select id="newItemCategory" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Starters">Starters</option>
+                                        <option value="Main Course">Main Course</option>
+                                        <option value="Breads">Breads</option>
+                                        <option value="Rice">Rice</option>
+                                        <option value="Desserts">Desserts</option>
+                                        <option value="Beverages">Beverages</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="setting-group">
+                                    <label for="newItemPrice">Price (₹) *</label>
+                                    <input type="number" id="newItemPrice" min="0" placeholder="e.g., 299" required>
+                                </div>
+                                <div class="setting-group">
+                                    <label class="checkbox-label available-toggle">
+                                        <input type="checkbox" id="newItemAvailable" checked>
+                                        <span>Available</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="setting-group">
+                                <label><i class="fas fa-leaf"></i> Food Type *</label>
+                                <div class="food-type-options">
+                                    <label class="radio-label veg">
+                                        <input type="radio" name="newItemFoodType" id="newItemVeg" value="veg" checked>
+                                        <span class="radio-custom veg-icon"></span>
+                                        <span>Veg</span>
+                                    </label>
+                                    <label class="radio-label nonveg">
+                                        <input type="radio" name="newItemFoodType" id="newItemNonVeg" value="nonveg">
+                                        <span class="radio-custom nonveg-icon"></span>
+                                        <span>Non-Veg</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="setting-group">
+                                <label for="newItemDescription">Description</label>
+                                <textarea id="newItemDescription" rows="2" placeholder="Short description of the dish..."></textarea>
+                            </div>
+                            <div class="setting-group">
+                                <label>Item Photo</label>
+                                <div class="photo-upload-area" id="photoUploadArea">
+                                    <input type="file" id="menuPhotoInput" accept="image/*" style="display: none;">
+                                    <div class="upload-placeholder" id="uploadPlaceholder">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p>Click or drag image here</p>
+                                        <span>JPG, PNG, WebP (Max 5MB)</span>
+                                    </div>
+                                    <div class="upload-preview" id="uploadPreview" style="display: none;">
+                                        <img id="previewImage" src="" alt="Preview">
+                                        <button type="button" class="remove-photo" id="removePhoto">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-add-menu-item">
+                                <i class="fas fa-plus"></i> Add to Menu
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
 
             <!-- Save Button -->
@@ -509,6 +589,7 @@
                                 <th>Items</th>
                                 <th>Total</th>
                                 <th>Status</th>
+                                <th>Payment</th>
                                 <th>Time</th>
                                 <th>Actions</th>
                             </tr>
@@ -525,50 +606,104 @@
 
     <!-- Add/Edit Menu Modal -->
     <div class="modal-overlay" id="menuModal">
-        <div class="modal-content">
+        <div class="modal-content menu-modal-content">
             <div class="modal-header">
-                <h3 id="menuModalTitle">Add Menu Item</h3>
+                <h3 id="menuModalTitle"><i class="fas fa-utensils"></i> Add Menu Item</h3>
                 <button class="modal-close" onclick="closeMenuModal()">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="menuForm">
+                <form id="menuForm" class="menu-edit-form">
                     <input type="hidden" id="menuItemId">
-                    <div class="form-group">
-                        <label>Item Name</label>
-                        <input type="text" id="itemName" required>
+                    
+                    <!-- Row 1: Name and Category -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemName"><i class="fas fa-tag"></i> Item Name *</label>
+                            <input type="text" id="itemName" placeholder="e.g., Butter Chicken" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="itemCategory"><i class="fas fa-list"></i> Category *</label>
+                            <select id="itemCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="Starters">Starters</option>
+                                <option value="Main Course">Main Course</option>
+                                <option value="Breads">Breads</option>
+                                <option value="Rice">Rice</option>
+                                <option value="Desserts">Desserts</option>
+                                <option value="Beverages">Beverages</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Category</label>
-                        <select id="itemCategory" required>
-                            <option value="Starters">Starters</option>
-                            <option value="Main Course">Main Course</option>
-                            <option value="Breads">Breads</option>
-                            <option value="Rice">Rice</option>
-                            <option value="Desserts">Desserts</option>
-                            <option value="Beverages">Beverages</option>
-                        </select>
+                    
+                    <!-- Row 2: Price and Food Type -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemPrice"><i class="fas fa-rupee-sign"></i> Price (₹) *</label>
+                            <input type="number" id="itemPrice" min="0" placeholder="e.g., 299" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-leaf"></i> Food Type *</label>
+                            <div class="food-type-options">
+                                <label class="radio-label veg">
+                                    <input type="radio" name="foodType" id="itemVegetarian" value="veg">
+                                    <span class="radio-custom veg-icon"></span>
+                                    <span>Veg</span>
+                                </label>
+                                <label class="radio-label nonveg">
+                                    <input type="radio" name="foodType" id="itemNonVegetarian" value="nonveg">
+                                    <span class="radio-custom nonveg-icon"></span>
+                                    <span>Non-Veg</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Price (₹)</label>
-                        <input type="number" id="itemPrice" min="0" required>
+                    
+                    <!-- Row 3: Description -->
+                    <div class="form-group full-width">
+                        <label for="itemDescription"><i class="fas fa-align-left"></i> Description</label>
+                        <textarea id="itemDescription" rows="2" placeholder="Short description of the dish..."></textarea>
                     </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="itemDescription" rows="3"></textarea>
+                    
+                    <!-- Row 4: Image Upload and Availability -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-image"></i> Item Image</label>
+                            <input type="hidden" id="itemImage" value="">
+                            <div class="modal-photo-upload" id="modalPhotoUpload">
+                                <input type="file" id="modalPhotoInput" accept="image/*" style="display: none;">
+                                <div class="modal-upload-placeholder" id="modalUploadPlaceholder">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Click or drag image</span>
+                                </div>
+                                <div class="modal-upload-preview" id="modalUploadPreview" style="display: none;">
+                                    <img id="modalPreviewImage" src="" alt="Preview">
+                                    <button type="button" class="remove-modal-photo" id="removeModalPhoto">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-toggle-on"></i> Availability</label>
+                            <div class="availability-toggle">
+                                <label class="switch-label">
+                                    <input type="checkbox" id="itemAvailable" checked>
+                                    <span class="switch-slider"></span>
+                                    <span class="switch-text">Available</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Image URL</label>
-                        <input type="text" id="itemImage" placeholder="images/menu-placeholder.png">
+                    
+                    <!-- Submit Button -->
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="closeMenuModal()">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-save"></i> Save Item
+                        </button>
                     </div>
-                    <div class="form-group check-group">
-                        <label>
-                            <input type="checkbox" id="itemVegetarian"> Vegetarian
-                        </label>
-                        <label>
-                            <input type="checkbox" id="itemAvailable" checked> Available
-                        </label>
-                    </div>
-                    <button type="submit" class="btn-submit">Save Item</button>
                 </form>
             </div>
         </div>
@@ -604,6 +739,31 @@
       </div>
     </div>
 
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteConfirmModal">
+      <div class="modal-content" style="max-width: 400px; width: 90%;">
+        <div class="modal-header">
+          <h3><i class="fas fa-exclamation-triangle"></i> Confirm Delete</h3>
+          <button class="modal-close" onclick="closeDeleteModal()">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <p style="color: #ccc; margin-bottom: 1.5rem; text-align: center;">
+            Are you sure you want to delete this item? This action cannot be undone.
+          </p>
+          <div class="form-actions" style="justify-content: center; gap: 1rem;">
+            <button type="button" class="btn-cancel" onclick="closeDeleteModal()">
+              Cancel
+            </button>
+            <button type="button" class="action-btn delete" onclick="confirmDelete()" style="padding: 0.75rem 1.5rem;">
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
       <div class="loader"></div>
@@ -612,6 +772,6 @@
     <!-- Toast Notification -->
     <div class="toast" id="toast"></div>
 
-    <script src="admin.js"></script>
+    <script src="admin.js?v=2"></script>
   </body>
 </html>

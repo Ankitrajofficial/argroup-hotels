@@ -461,10 +461,12 @@ function initMobileMenu() {
     if (forceClose || isActive) {
       hamburger.classList.remove("active");
       menu.classList.remove("active");
+      document.body.classList.remove("menu-open");
       document.body.style.overflow = "";
     } else {
       hamburger.classList.add("active");
       menu.classList.add("active");
+      document.body.classList.add("menu-open");
       document.body.style.overflow = "hidden";
     }
   };
@@ -595,6 +597,7 @@ function initAuth() {
       const hamburger = document.getElementById("mobileMenuToggle");
       if (menu) menu.classList.remove("active");
       if (hamburger) hamburger.classList.remove("active");
+      document.body.classList.remove("menu-open");
       document.body.style.overflow = "";
 
       if (currentUser) {

@@ -2,7 +2,56 @@ const express = require('express');
 const router = express.Router();
 const Menu = require('../models/Menu');
 const { protect, isAdmin } = require('../middleware/auth');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
+// Ensure menu images directory exists
+const menuImageDir = path.join(__dirname, '../images/menu');
+if (!fs.existsSync(menuImageDir)) {
+    fs.mkdirSync(menuImageDir, { recursive: true });
+}
+
+// Multer configuration for menu images
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, menuImageDir);
+    },
+    filename: (req, file, cb) => {
+        const uniqueName = `menu-${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
+        cb(null, uniqueName);
+    }
+});
+
+const upload = multer({
+    storage,
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+    fileFilter: (req, file, cb) => {
+        const allowed = /jpeg|jpg|png|gif|webp/;
+        const ext = allowed.test(path.extname(file.originalname).toLowerCase());
+        const mime = allowed.test(file.mimetype);
+        if (ext && mime) {
+            cb(null, true);
+        } else {
+            cb(new Error('Only image files are allowed'));
+        }
+    }
+});
+
+// POST /api/menu/upload-image - Admin: Upload menu item image
+router.post('/upload-image', protect, isAdmin, upload.single('menuImage'), (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: 'No file uploaded' });
+        }
+        
+        const imagePath = `images/menu/${req.file.filename}`;
+        res.json({ success: true, imagePath });
+    } catch (error) {
+        console.error('Menu image upload error:', error);
+        res.status(500).json({ success: false, message: 'Error uploading image' });
+    }
+});
 // GET /api/menu - Public: Get all available menu items
 router.get('/', async (req, res) => {
     try {

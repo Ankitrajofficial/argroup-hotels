@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Hotel Ortus</title>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin-new.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-crown"></i>
+                <span class="logo-text">Hotel Admin</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <li class="nav-item active" data-section="dashboard">
+                    <a href="#dashboard" class="nav-link">
+                        <i class="fas fa-th-large"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-section="bookings">
+                    <a href="#bookings" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Bookings</span>
+                        <span class="nav-badge" id="bookingsBadge">0</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-section="orders">
+                    <a href="#orders" class="nav-link">
+                        <i class="fas fa-utensils"></i>
+                        <span>Food Orders</span>
+                        <span class="nav-badge" id="ordersBadge">0</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-section="users">
+                    <a href="#users" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-section="contacts">
+                    <a href="#contacts" class="nav-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>Messages</span>
+                        <span class="nav-badge" id="messagesBadge">0</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-section="menu">
+                    <a href="#menu" class="nav-link">
+                        <i class="fas fa-book-open"></i>
+                        <span>Menu Items</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-section="settings">
+                    <a href="#settings" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="../index.html" class="footer-link">
+                <i class="fas fa-external-link-alt"></i>
+                <span>View Site</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="topbar-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search..." id="globalSearch">
+            </div>
+            
+            <div class="topbar-actions">
+                <!-- Theme Toggle -->
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-sun theme-icon-light"></i>
+                    <i class="fas fa-moon theme-icon-dark"></i>
+                </button>
+                
+                <!-- Notifications -->
+                <button class="notification-btn" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-dot" id="notificationDot"></span>
+                </button>
+                
+                <!-- User Menu -->
+                <div class="user-menu">
+                    <button class="user-btn" id="userBtn">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="user-name" id="adminName">Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="#" class="dropdown-item" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section class="content-section active" id="dashboardSection">
+                <div class="section-header">
+                    <h1>Dashboard</h1>
+                    <p class="section-subtitle">Welcome back! Here's your hotel overview.</p>
+                </div>
+                
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon bookings">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="statBookings">0</span>
+                            <span class="stat-label">Active Bookings</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orders">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="statOrders">0</span>
+                            <span class="stat-label">Pending Orders</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon users">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="statUsers">0</span>
+                            <span class="stat-label">Total Users</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon revenue">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="statRevenue">₹0</span>
+                            <span class="stat-label">Today's Revenue</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="action-cards">
+                        <button class="action-card" onclick="goToSection('bookings')">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>New Booking</span>
+                        </button>
+                        <button class="action-card" onclick="goToSection('menu')">
+                            <i class="fas fa-hamburger"></i>
+                            <span>Add Menu Item</span>
+                        </button>
+                        <button class="action-card" onclick="goToSection('orders')">
+                            <i class="fas fa-concierge-bell"></i>
+                            <span>View Orders</span>
+                        </button>
+                        <button class="action-card" onclick="goToSection('settings')">
+                            <i class="fas fa-sliders-h"></i>
+                            <span>Site Settings</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="activityList">
+                        <!-- Activity items loaded here -->
+                        <div class="activity-item">
+                            <div class="activity-icon booking">
+                                <i class="fas fa-bed"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p>New booking from <strong>John Doe</strong></p>
+                                <span class="activity-time">5 minutes ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bookings Section -->
+            <section class="content-section" id="bookingsSection">
+                <div class="section-header">
+                    <h1>Room Bookings</h1>
+                    <div class="header-actions">
+                        <button class="btn-calendar" onclick="toggleCalendar()">
+                            <i class="fas fa-calendar-week"></i>
+                            <span>Occupancy</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Occupancy Calendar (Hidden by default) -->
+                <div class="occupancy-calendar" id="occupancyCalendar" style="display: none;">
+                    <div class="calendar-header">
+                        <button class="cal-nav" id="calPrev"><i class="fas fa-chevron-left"></i></button>
+                        <h3 id="calendarMonth">December 2024</h3>
+                        <button class="cal-nav" id="calNext"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- Calendar rendered here -->
+                    </div>
+                    <div class="calendar-legend">
+                        <span class="legend-item"><span class="dot available"></span> Available</span>
+                        <span class="legend-item"><span class="dot booked"></span> Booked</span>
+                        <span class="legend-item"><span class="dot partial"></span> Partial</span>
+                    </div>
+                </div>
+
+                <!-- Booking Filters -->
+                <div class="filter-bar">
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" data-status="all">All</button>
+                        <button class="filter-tab" data-status="pending">Pending</button>
+                        <button class="filter-tab" data-status="confirmed">Confirmed</button>
+                        <button class="filter-tab" data-status="checked-in">Checked In</button>
+                        <button class="filter-tab" data-status="completed">Completed</button>
+                    </div>
+                    <div class="filter-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search guest..." id="bookingSearch">
+                    </div>
+                </div>
+
+                <!-- Booking Stats -->
+                <div class="mini-stats">
+                    <div class="mini-stat pending">
+                        <span class="num" id="bookingPending">0</span>
+                        <span class="label">Pending</span>
+                    </div>
+                    <div class="mini-stat confirmed">
+                        <span class="num" id="bookingConfirmed">0</span>
+                        <span class="label">Confirmed</span>
+                    </div>
+                    <div class="mini-stat checkedin">
+                        <span class="num" id="bookingCheckedIn">0</span>
+                        <span class="label">Checked In</span>
+                    </div>
+                    <div class="mini-stat revenue">
+                        <span class="num" id="todayCollection">₹0</span>
+                        <span class="label">Today's Collection</span>
+                    </div>
+                </div>
+
+                <!-- Bookings Cards -->
+                <div class="bookings-grid" id="bookingsGrid">
+                    <!-- Booking cards loaded here -->
+                    <div class="loading-placeholder">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading bookings...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Food Orders Section -->
+            <section class="content-section" id="ordersSection">
+                <div class="section-header">
+                    <h1>Food Orders</h1>
+                    <button class="btn-refresh" onclick="loadOrders()">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+
+                <div class="filter-bar">
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" data-status="all">All</button>
+                        <button class="filter-tab" data-status="Pending">Pending</button>
+                        <button class="filter-tab" data-status="Preparing">Preparing</button>
+                        <button class="filter-tab" data-status="Ready">Ready</button>
+                        <button class="filter-tab" data-status="Delivered">Delivered</button>
+                    </div>
+                </div>
+
+                <div class="orders-grid" id="ordersGrid">
+                    <!-- Order cards loaded here -->
+                </div>
+            </section>
+
+            <!-- Users Section -->
+            <section class="content-section" id="usersSection">
+                <div class="section-header">
+                    <h1>Users</h1>
+                </div>
+
+                <div class="filter-bar">
+                    <div class="filter-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search users..." id="userSearch">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Role</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Users loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="usersPagination"></div>
+            </section>
+
+            <!-- Contacts Section -->
+            <section class="content-section" id="contactsSection">
+                <div class="section-header">
+                    <h1>Contact Messages</h1>
+                </div>
+
+                <div class="filter-bar">
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" data-status="all">All</button>
+                        <button class="filter-tab" data-status="pending">Pending</button>
+                        <button class="filter-tab" data-status="in-progress">In Progress</button>
+                        <button class="filter-tab" data-status="resolved">Resolved</button>
+                    </div>
+                </div>
+
+                <div class="contacts-list" id="contactsList">
+                    <!-- Contact cards loaded here -->
+                </div>
+            </section>
+
+            <!-- Menu Items Section -->
+            <section class="content-section" id="menuSection">
+                <div class="section-header">
+                    <h1>Menu Items</h1>
+                    <button class="btn-primary" onclick="openMenuModal()">
+                        <i class="fas fa-plus"></i>
+                        Add Item
+                    </button>
+                </div>
+
+                <div class="filter-bar">
+                    <div class="filter-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search menu..." id="menuSearch">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="menuTableBody">
+                            <!-- Menu items loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section class="content-section" id="settingsSection">
+                <div class="section-header">
+                    <h1>Site Settings</h1>
+                </div>
+
+                <div class="settings-grid">
+                    <!-- Site Info -->
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-info-circle"></i> Site Information</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Hotel Name</label>
+                                <input type="text" id="settingHotelName" value="Hotel Ortus">
+                            </div>
+                            <div class="form-group">
+                                <label>Contact Email</label>
+                                <input type="email" id="settingEmail" value="">
+                            </div>
+                            <div class="form-group">
+                                <label>Contact Phone</label>
+                                <input type="tel" id="settingPhone" value="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Offer Banner -->
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-tags"></i> Offer Banner</h3>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="offerEnabled" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Offer Name</label>
+                                <input type="text" id="offerName" value="Special Offer">
+                            </div>
+                            <div class="form-group">
+                                <label>Discount (%)</label>
+                                <input type="number" id="offerDiscount" value="30" min="1" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea id="offerDescription" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section Toggles -->
+                    <div class="settings-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-eye"></i> Section Visibility</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="toggle-row">
+                                <span>Couple Friendly Section</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="coupleSectionEnabled" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-row">
+                                <span>Restaurant Section</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="restaurantEnabled" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-row">
+                                <span>Testimonials Section</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="testimonialsEnabled" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-actions">
+                    <button class="btn-save" id="saveSettingsBtn">
+                        <i class="fas fa-save"></i>
+                        Save Settings
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Menu Modal -->
+    <div class="modal-overlay" id="menuModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="menuModalTitle">Add Menu Item</h3>
+                <button class="modal-close" onclick="closeMenuModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="menuForm">
+                    <input type="hidden" id="menuItemId">
+                    <div class="form-group">
+                        <label>Item Name</label>
+                        <input type="text" id="itemName" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="itemCategory" required>
+                                <option value="Starters">Starters</option>
+                                <option value="Main Course">Main Course</option>
+                                <option value="Breads">Breads</option>
+                                <option value="Rice">Rice</option>
+                                <option value="Desserts">Desserts</option>
+                                <option value="Beverages">Beverages</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Price (₹)</label>
+                            <input type="number" id="itemPrice" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="itemDescription" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Image URL</label>
+                        <input type="text" id="itemImage" placeholder="images/menu-placeholder.png">
+                    </div>
+                    <div class="form-row checkboxes">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="itemVegetarian">
+                            <span>Vegetarian</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="itemAvailable" checked>
+                            <span>Available</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-primary full-width">Save Item</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <h3><i class="fas fa-bed"></i> Booking Details</h3>
+                <button class="modal-close" onclick="closeBookingModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="bookingModalBody">
+                <!-- Booking details loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-envelope-open"></i> Message Details</h3>
+                <button class="modal-close" onclick="closeContactModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="contactModalBody">
+                <!-- Contact details loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Panel -->
+    <div class="notifications-panel" id="notificationsPanel">
+        <div class="panel-header">
+            <h4>Notifications</h4>
+            <button class="mark-read" id="markAllRead">Mark all read</button>
+        </div>
+        <div class="notifications-list" id="notificationsList">
+            <!-- Notifications loaded here -->
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+    </div>
+
+    <script src="admin-new.js"></script>
+</body>
+</html>

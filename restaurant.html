@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant | Hotel Ortus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="restaurant.css">
+</head>
+<body>
+    <!-- Restaurant Navbar -->
+    <nav class="restaurant-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <i class="fas fa-arrow-left"></i>
+                <span>Hotel Ortus</span>
+            </a>
+            <h1 class="nav-title">Restaurant</h1>
+            <button class="cart-toggle" onclick="toggleCart()">
+                <i class="fas fa-shopping-basket"></i>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <section class="restaurant-hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h2>Values of Taste</h2>
+            <p>Order delicious food directly to your room</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="restaurant-main">
+        <div class="container">
+            <!-- Search & Filter Section -->
+            <div class="filter-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search dishes..." oninput="handleSearch(this.value)">
+                    <button class="clear-search" id="clearSearch" onclick="clearSearch()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="category-filters" id="categoryFilters">
+                    <button class="filter-btn active" data-category="all" onclick="filterByCategory('all', this)">
+                        <i class="fas fa-utensils"></i> All
+                    </button>
+                    <button class="filter-btn" data-category="Starters" onclick="filterByCategory('Starters', this)">
+                        <i class="fas fa-pepper-hot"></i> Starters
+                    </button>
+                    <button class="filter-btn" data-category="Main Course" onclick="filterByCategory('Main Course', this)">
+                        <i class="fas fa-bowl-food"></i> Main Course
+                    </button>
+                    <button class="filter-btn" data-category="Breads" onclick="filterByCategory('Breads', this)">
+                        <i class="fas fa-bread-slice"></i> Breads
+                    </button>
+                    <button class="filter-btn" data-category="Rice" onclick="filterByCategory('Rice', this)">
+                        <i class="fas fa-seedling"></i> Rice
+                    </button>
+                    <button class="filter-btn" data-category="Desserts" onclick="filterByCategory('Desserts', this)">
+                        <i class="fas fa-ice-cream"></i> Desserts
+                    </button>
+                    <button class="filter-btn" data-category="Beverages" onclick="filterByCategory('Beverages', this)">
+                        <i class="fas fa-mug-hot"></i> Beverages
+                    </button>
+                </div>
+            </div>
+
+            <!-- Menu Grid -->
+            <div class="menu-grid" id="menuGrid">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading menu...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Order Status Tracker Button (Floating) -->
+    <button class="order-status-btn" id="orderStatusBtn" onclick="toggleOrderStatus()" style="display: none;">
+        <i class="fas fa-truck"></i>
+        <span>Track Order</span>
+    </button>
+
+    <!-- Order Status Modal -->
+    <div class="order-status-overlay" id="orderStatusOverlay" onclick="toggleOrderStatus()"></div>
+    <div class="order-status-modal" id="orderStatusModal">
+        <div class="status-header">
+            <h3><i class="fas fa-clipboard-list"></i> Order Status</h3>
+            <button class="close-status" onclick="toggleOrderStatus()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="status-body">
+            <div class="status-timer">
+                <span class="timer-label">Estimated Time</span>
+                <span class="timer-value" id="estimatedTime">20:00</span>
+            </div>
+            <div class="status-steps">
+                <div class="status-step active" data-step="1">
+                    <div class="step-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step-content">
+                        <span class="step-title">Order Received</span>
+                        <span class="step-desc">We got your order!</span>
+                    </div>
+                </div>
+                <div class="status-step" data-step="2">
+                    <div class="step-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step-content">
+                        <span class="step-title">Preparing</span>
+                        <span class="step-desc">Chef is cooking your food</span>
+                    </div>
+                </div>
+                <div class="status-step" data-step="3">
+                    <div class="step-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step-content">
+                        <span class="step-title">Ready</span>
+                        <span class="step-desc">Your food is ready</span>
+                    </div>
+                </div>
+                <div class="status-step" data-step="4">
+                    <div class="step-icon">
+                        <i class="fas fa-walking"></i>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step-content">
+                        <span class="step-title">On the Way</span>
+                        <span class="step-desc">Delivering to your room</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="status-footer">
+            <p class="status-message" id="statusMessage">Your order is being prepared!</p>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <aside class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Your Order</h3>
+            <button class="close-cart" onclick="toggleCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-body" id="cartBody">
+            <div class="empty-cart">
+                <i class="fas fa-shopping-basket"></i>
+                <p>Your cart is empty</p>
+                <span>Add some delicious items!</span>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter">
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">₹0</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span id="totalAmount">₹0</span>
+                </div>
+            </div>
+            <div class="checkout-form" id="checkoutForm">
+                <input type="text" id="guestName" placeholder="Your Name" required>
+                <input type="text" id="roomNumber" placeholder="Room Number" required>
+                <textarea id="specialNotes" placeholder="Special instructions (optional)" rows="2"></textarea>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn" onclick="placeOrder()">
+                <span>Place Order</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Sticky Cart Button (Mobile) -->
+    <button class="sticky-cart-btn" id="stickyCartBtn" onclick="toggleCart()">
+        <div class="cart-info">
+            <span class="item-count" id="stickyItemCount">0 items</span>
+            <span class="cart-total" id="stickyCartTotal">₹0</span>
+        </div>
+        <span class="view-cart">View Cart <i class="fas fa-chevron-right"></i></span>
+    </button>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Item added to cart</span>
+    </div>
+
+    <script src="restaurant.js"></script>
+</body>
+</html>

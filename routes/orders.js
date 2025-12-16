@@ -68,4 +68,31 @@ router.put('/:id/status', protect, isAdmin, async (req, res) => {
     }
 });
 
+// PUT /api/orders/:id/payment - Admin: Update payment status
+router.put('/:id/payment', protect, isAdmin, async (req, res) => {
+    try {
+        const { paymentStatus } = req.body;
+        
+        const validStatuses = ['Due', 'Paid'];
+        if (!validStatuses.includes(paymentStatus)) {
+            return res.status(400).json({ message: 'Invalid payment status' });
+        }
+
+        const updatedOrder = await Order.findByIdAndUpdate(
+            req.params.id,
+            { paymentStatus },
+            { new: true }
+        );
+
+        if (!updatedOrder) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        res.json(updatedOrder);
+    } catch (error) {
+        console.error('Error updating payment status:', error);
+        res.status(500).json({ message: 'Error updating payment status' });
+    }
+});
+
 module.exports = router;

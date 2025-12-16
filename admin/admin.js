@@ -289,7 +289,7 @@ async function changeRole(userId, newRole) {
 // ===================================
 
 async function deleteUser(userId, userName) {
-    if (!confirm(`Are you sure you want to delete "${userName}"? This cannot be undone.`)) return;
+    showConfirmationModal(`Are you sure you want to delete "${userName}"? This cannot be undone.`, async () => {
     
     showLoading(true);
     
@@ -313,6 +313,7 @@ async function deleteUser(userId, userName) {
     }
     
     showLoading(false);
+    });
 }
 
 // ===================================
@@ -1932,6 +1933,11 @@ async function loadSettings() {
             // Setup toggle listeners and image upload
             setupSettingsListeners();
             setupImageUpload();
+            
+            // Initialize menu form in settings
+            if (typeof initSettingsMenuForm === 'function') {
+                initSettingsMenuForm();
+            }
         }
     } catch (error) {
         console.error('Load settings error:', error);
@@ -2176,11 +2182,15 @@ function renderFoodOrders() {
 
     const tbody = document.getElementById('ordersTableBody');
     if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding: 2rem;">No orders found</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 2rem;">No orders found</td></tr>';
         return;
     }
 
-    tbody.innerHTML = filtered.map(order => `
+    tbody.innerHTML = filtered.map(order => {
+        const paymentStatus = order.paymentStatus || 'Due';
+        const paymentClass = paymentStatus === 'Paid' ? 'payment-paid' : 'payment-due';
+        
+        return `
         <tr>
             <td><small>#${order._id.slice(-6)}</small></td>
             <td>${escapeHtml(order.customerDetails.name)}</td>
@@ -2190,6 +2200,12 @@ function renderFoodOrders() {
             </td>
             <td><strong>₹${order.totalAmount}</strong></td>
             <td><span class="status-badge ${order.status.toLowerCase()}">${order.status}</span></td>
+            <td>
+                <select class="payment-select ${paymentClass}" onchange="updatePaymentStatus('${order._id}', this.value)">
+                    <option value="Due" ${paymentStatus === 'Due' ? 'selected' : ''}>Due</option>
+                    <option value="Paid" ${paymentStatus === 'Paid' ? 'selected' : ''}>Paid</option>
+                </select>
+            </td>
             <td>${formatDateTime(order.createdAt)}</td>
             <td>
                 <select onchange="updateOrderStatus('${order._id}', this.value)" style="padding: 4px; border-radius: 4px;">
@@ -2201,7 +2217,7 @@ function renderFoodOrders() {
                 </select>
             </td>
         </tr>
-    `).join('');
+    `}).join('');
 }
 
 async function handleMenuSubmit(e) {
@@ -2243,21 +2259,51 @@ async function handleMenuSubmit(e) {
     }
 }
 
-async function deleteMenuItem(id) {
-    if (!confirm('Delete this menu item?')) return;
+// ===================================
+// Delete Menu Item (Custom Modal)
+// ===================================
+
+let itemToDeleteId = null;
+
+function deleteMenuItem(id) {
+    itemToDeleteId = id;
+    const modal = document.getElementById('deleteConfirmModal');
+    modal.classList.add('show');
+}
+
+function closeDeleteModal() {
+    itemToDeleteId = null;
+    document.getElementById('deleteConfirmModal').classList.remove('show');
+}
+
+async function confirmDelete() {
+    if (!itemToDeleteId) return;
+    
+    const deleteBtn = document.querySelector('#deleteConfirmModal .action-btn.delete');
+    const originalText = deleteBtn.innerHTML;
+    deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
+    deleteBtn.disabled = true;
+
     try {
-        const response = await fetch(`/api/menu/${id}`, {
+        const response = await fetch(`/api/menu/${itemToDeleteId}`, {
             method: 'DELETE',
             credentials: 'include'
         });
+
         if (response.ok) {
-            showToast('Item deleted', 'success');
+            showToast('Item deleted successfully', 'success');
             loadMenu();
+            closeDeleteModal();
         } else {
-            showToast('Error deleting item', 'error');
+            const data = await response.json();
+            showToast(data.message || 'Failed to delete item', 'error');
         }
     } catch (error) {
+        console.error('Delete error:', error);
         showToast('Error deleting item', 'error');
+    } finally {
+        deleteBtn.innerHTML = originalText;
+        deleteBtn.disabled = false;
     }
 }
 
@@ -2278,11 +2324,32 @@ async function updateOrderStatus(id, status) {
     }
 }
 
+async function updatePaymentStatus(id, paymentStatus) {
+    try {
+        const response = await fetch(`/api/orders/${id}/payment`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ paymentStatus })
+        });
+        if (response.ok) {
+            showToast(`Payment marked as ${paymentStatus}`, 'success');
+            loadFoodOrders();
+        } else {
+            showToast('Error updating payment status', 'error');
+        }
+    } catch (error) {
+        showToast('Error updating payment status', 'error');
+    }
+}
+
 // Modal Helpers
 function openAddMenuModal() {
     document.getElementById('menuForm').reset();
     document.getElementById('menuItemId').value = '';
-    document.getElementById('menuModalTitle').textContent = 'Add Menu Item';
+    document.getElementById('itemVegetarian').checked = true;  // Default to Veg
+    document.getElementById('itemAvailable').checked = true;   // Default to Available
+    document.getElementById('menuModalTitle').innerHTML = '<i class="fas fa-plus"></i> Add Menu Item';
     document.getElementById('menuModal').classList.add('show');
 }
 
@@ -2296,15 +2363,414 @@ function openEditMenuModal(id) {
     document.getElementById('itemPrice').value = item.price;
     document.getElementById('itemDescription').value = item.description || '';
     document.getElementById('itemImage').value = item.image || '';
-    document.getElementById('itemVegetarian').checked = item.isVegetarian;
+    
+    // Set food type radio buttons
+    if (item.isVegetarian) {
+        document.getElementById('itemVegetarian').checked = true;
+        document.getElementById('itemNonVegetarian').checked = false;
+    } else {
+        document.getElementById('itemVegetarian').checked = false;
+        document.getElementById('itemNonVegetarian').checked = true;
+    }
+    
     document.getElementById('itemAvailable').checked = item.isAvailable;
+    
+    // Set modal photo preview if item has image
+    resetModalPhotoUpload();
+    if (item.image) {
+        document.getElementById('itemImage').value = item.image;
+        document.getElementById('modalPreviewImage').src = '/' + item.image;
+        document.getElementById('modalUploadPlaceholder').style.display = 'none';
+        document.getElementById('modalUploadPreview').style.display = 'block';
+    }
 
-    document.getElementById('menuModalTitle').textContent = 'Edit Menu Item';
+    document.getElementById('menuModalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Menu Item';
     document.getElementById('menuModal').classList.add('show');
 }
 
 function closeMenuModal() {
     document.getElementById('menuModal').classList.remove('show');
+    resetModalPhotoUpload();
 }
 
+// Modal Photo Upload Variables
+let selectedModalPhoto = null;
+let modalPhotoInitialized = false;
+
+function resetModalPhotoUpload() {
+    selectedModalPhoto = null;
+    document.getElementById('itemImage').value = '';
+    document.getElementById('modalPreviewImage').src = '';
+    document.getElementById('modalUploadPlaceholder').style.display = 'flex';
+    document.getElementById('modalUploadPreview').style.display = 'none';
+    const input = document.getElementById('modalPhotoInput');
+    if (input) input.value = '';
+}
+
+function initModalPhotoUpload() {
+    if (modalPhotoInitialized) return;
+    modalPhotoInitialized = true;
+    
+    const uploadArea = document.getElementById('modalPhotoUpload');
+    const photoInput = document.getElementById('modalPhotoInput');
+    const placeholder = document.getElementById('modalUploadPlaceholder');
+    const preview = document.getElementById('modalUploadPreview');
+    const previewImg = document.getElementById('modalPreviewImage');
+    const removeBtn = document.getElementById('removeModalPhoto');
+    
+    if (!uploadArea || !photoInput) return;
+    
+    // Click to upload
+    uploadArea.addEventListener('click', () => {
+        photoInput.click();
+    });
+    
+    // File selected
+    photoInput.addEventListener('change', (e) => {
+        handleModalPhotoSelect(e.target.files[0]);
+    });
+    
+    // Drag and drop
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+    
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        if (e.dataTransfer.files.length) {
+            handleModalPhotoSelect(e.dataTransfer.files[0]);
+        }
+    });
+    
+    // Remove photo
+    if (removeBtn) {
+        removeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetModalPhotoUpload();
+        });
+    }
+}
+
+async function handleModalPhotoSelect(file) {
+    if (!file) return;
+    
+    // Validate file
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+        showToast('Please select a valid image file', 'error');
+        return;
+    }
+    
+    if (file.size > 5 * 1024 * 1024) {
+        showToast('Image must be less than 5MB', 'error');
+        return;
+    }
+    
+    selectedModalPhoto = file;
+    
+    // Show preview
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        document.getElementById('modalPreviewImage').src = e.target.result;
+        document.getElementById('modalUploadPlaceholder').style.display = 'none';
+        document.getElementById('modalUploadPreview').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+    
+    // Upload immediately
+    try {
+        const formData = new FormData();
+        formData.append('menuImage', file);
+        
+        const response = await fetch('/api/menu/upload-image', {
+            method: 'POST',
+            credentials: 'include',
+            body: formData
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            document.getElementById('itemImage').value = data.imagePath;
+            showToast('Image uploaded!', 'success');
+        } else {
+            showToast('Failed to upload image', 'error');
+            resetModalPhotoUpload();
+        }
+    } catch (error) {
+        console.error('Upload error:', error);
+        showToast('Error uploading image', 'error');
+        resetModalPhotoUpload();
+    }
+}
+
+// Initialize modal photo upload when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    initModalPhotoUpload();
+});
+
 // Initial Load Call if on Dining Page (handled in loadDashboard)
+
+// ===================================
+// Add Menu Item Form in Settings
+// ===================================
+
+let selectedMenuPhoto = null;
+let settingsMenuFormInitialized = false;
+
+function initSettingsMenuForm() {
+    if (settingsMenuFormInitialized) return;
+    settingsMenuFormInitialized = true;
+    
+    const form = document.getElementById('settingsMenuForm');
+    const photoInput = document.getElementById('menuPhotoInput');
+    const uploadArea = document.getElementById('photoUploadArea');
+    const placeholder = document.getElementById('uploadPlaceholder');
+    const preview = document.getElementById('uploadPreview');
+    const previewImg = document.getElementById('previewImage');
+    const removeBtn = document.getElementById('removePhoto');
+    
+    if (!form || !uploadArea) return;
+    
+    // Click to upload
+    uploadArea.addEventListener('click', () => {
+        photoInput.click();
+    });
+    
+    // File selected
+    photoInput.addEventListener('change', (e) => {
+        handleMenuPhotoSelect(e.target.files[0]);
+    });
+    
+    // Drag and drop
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+    
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            handleMenuPhotoSelect(file);
+        }
+    });
+    
+    // Remove photo
+    removeBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectedMenuPhoto = null;
+        placeholder.style.display = 'block';
+        preview.style.display = 'none';
+        photoInput.value = '';
+    });
+    
+    // Form submission
+    form.addEventListener('submit', handleSettingsMenuSubmit);
+}
+
+function handleMenuPhotoSelect(file) {
+    if (!file) return;
+    
+    // Validate size (5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+        showToast('Image must be less than 5MB', 'error');
+        return;
+    }
+    
+    // Validate type
+    if (!file.type.match(/image\/(jpeg|jpg|png|gif|webp)/)) {
+        showToast('Please select a valid image file', 'error');
+        return;
+    }
+    
+    selectedMenuPhoto = file;
+    
+    const placeholder = document.getElementById('uploadPlaceholder');
+    const preview = document.getElementById('uploadPreview');
+    const previewImg = document.getElementById('previewImage');
+    
+    // Preview the image
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        previewImg.src = event.target.result;
+        placeholder.style.display = 'none';
+        preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+}
+
+async function handleSettingsMenuSubmit(e) {
+    e.preventDefault();
+    
+    const submitBtn = e.target.querySelector('.btn-add-menu-item');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
+    submitBtn.disabled = true;
+    
+    try {
+        let imageUrl = '';
+        
+        // If photo selected, upload it first
+        if (selectedMenuPhoto) {
+            const formData = new FormData();
+            formData.append('menuImage', selectedMenuPhoto);
+            
+            const uploadResponse = await fetch('/api/menu/upload-image', {
+                method: 'POST',
+                credentials: 'include',
+                body: formData
+            });
+            
+            const uploadData = await uploadResponse.json();
+            if (uploadData.success) {
+                imageUrl = uploadData.imagePath;
+            }
+        }
+        
+        // Create menu item
+        const payload = {
+            name: document.getElementById('newItemName').value,
+            category: document.getElementById('newItemCategory').value,
+            price: Number(document.getElementById('newItemPrice').value),
+            description: document.getElementById('newItemDescription').value,
+            image: imageUrl || 'images/menu-placeholder.png',
+            isVegetarian: document.getElementById('newItemVeg').checked,
+            isAvailable: document.getElementById('newItemAvailable').checked
+        };
+        
+        const response = await fetch('/api/menu', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(payload)
+        });
+        
+        if (response.ok) {
+            showToast('Menu item added successfully!', 'success');
+            
+            // Reset form
+            document.getElementById('settingsMenuForm').reset();
+            selectedMenuPhoto = null;
+            document.getElementById('uploadPlaceholder').style.display = 'block';
+            document.getElementById('uploadPreview').style.display = 'none';
+            document.getElementById('menuPhotoInput').value = '';
+            document.getElementById('newItemAvailable').checked = true;
+            
+            // Refresh menu if on Dining section
+            if (typeof loadMenu === 'function') {
+                loadMenu();
+            }
+        } else {
+            const error = await response.json();
+            showToast(error.message || 'Error adding item', 'error');
+        }
+    } catch (error) {
+        console.error('Add menu item error:', error);
+        showToast('Error adding menu item', 'error');
+    } finally {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+}
+
+// Initialize the form when settings section is shown
+const originalShowSection = typeof showSection === 'function' ? showSection : null;
+function showSection(section) {
+    // Call original function if exists
+    if (originalShowSection) {
+        originalShowSection(section);
+    }
+    
+    // Show/hide sections
+    document.querySelectorAll('.admin-section').forEach(s => {
+        s.style.display = 'none';
+    });
+    
+    const targetSection = document.getElementById(`${section}Section`);
+    if (targetSection) {
+        targetSection.style.display = 'block';
+    }
+    
+    // Initialize menu form when settings is shown
+    if (section === 'settings') {
+        setTimeout(initSettingsMenuForm, 100);
+    }
+}
+
+// Confirmation Modal
+function showConfirmationModal(message, onConfirm) {
+    // Check if modal already exists
+    let modal = document.getElementById('confirmationModal');
+    
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'confirmationModal';
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content" style="max-width: 400px; text-align: center;">
+                <div class="modal-header">
+                    <h3 style="margin: 0;">Confirmation</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p id="confirmationMessage"></p>
+                </div>
+                <div class="modal-footer" style="justify-content: center; gap: 10px;">
+                    <button class="btn btn-secondary cancel-btn">Cancel</button>
+                    <button class="btn btn-danger confirm-btn">Delete</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        
+        // Add event listeners for closing
+        const closeBtn = modal.querySelector('.close');
+        const cancelBtn = modal.querySelector('.cancel-btn');
+        
+        const closeModal = () => {
+            modal.style.display = 'none';
+        };
+        
+        closeBtn.onclick = closeModal;
+        cancelBtn.onclick = closeModal;
+        
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                closeModal();
+            }
+        };
+    }
+    
+    // Set message and confirm action
+    document.getElementById('confirmationMessage').textContent = message;
+    const confirmBtn = modal.querySelector('.confirm-btn');
+    
+    // Remove old event listeners by cloning
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+    
+    newConfirmBtn.onclick = () => {
+        modal.style.display = 'none';
+        if (onConfirm) onConfirm();
+    };
+    
+    // Show modal
+    modal.style.display = 'block';
+}
+
+// Make functions globally available
+window.deleteUser = deleteUser;
+window.changeRole = changeRole;
+window.goToPage = goToPage;
+window.showConfirmationModal = showConfirmationModal;

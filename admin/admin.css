@@ -337,12 +337,14 @@
 }
 
 .action-btn.delete {
-  border-color: #dc3545;
-  color: #dc3545;
+  border-color: #ef4444;
+  background: #ef4444;
+  color: white;
 }
 
 .action-btn.delete:hover {
-  background: #dc3545;
+  background: #dc2626;
+  border-color: #dc2626;
   color: white;
 }
 
@@ -641,6 +643,34 @@
   color: #10b981;
 }
 
+/* Payment Status Select */
+.payment-select {
+  padding: 0.4rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  outline: none;
+}
+
+.payment-select.payment-paid {
+  background: rgba(16, 185, 129, 0.25);
+  color: #10b981;
+}
+
+.payment-select.payment-due {
+  background: rgba(245, 158, 11, 0.25);
+  color: #f59e0b;
+}
+
+.payment-select option {
+  background: #1a1a2e;
+  color: #fff;
+  padding: 0.5rem;
+}
+
 /* Action Buttons for Contacts */
 .action-btn.view {
   border-color: #3b82f6;
@@ -664,7 +694,9 @@
 
 /* Modal Overlay - Using ID for higher specificity to override styles.css */
 #contactModal.modal-overlay,
-#bookingModal.modal-overlay {
+#bookingModal.modal-overlay,
+#menuModal.modal-overlay,
+#deleteConfirmModal.modal-overlay {
   position: fixed !important;
   top: 0;
   left: 0;
@@ -679,13 +711,17 @@
 }
 
 #contactModal.modal-overlay.show,
-#bookingModal.modal-overlay.show {
+#bookingModal.modal-overlay.show,
+#menuModal.modal-overlay.show,
+#deleteConfirmModal.modal-overlay.show {
   display: flex !important;
 }
 
 /* Premium Modal Content */
 #contactModal .modal-content,
-#bookingModal .modal-content {
+#bookingModal .modal-content,
+#menuModal .modal-content,
+#deleteConfirmModal .modal-content {
   background: linear-gradient(
     145deg,
     rgba(26, 26, 46, 0.98) 0%,
@@ -779,6 +815,393 @@
   padding: 1.75rem;
   flex: 1;
   overflow-y: auto;
+}
+
+/* Menu Modal Specific Styles */
+.menu-modal-content {
+  max-width: 600px !important;
+  width: 600px !important;
+  height: auto !important;
+  max-height: 85vh !important;
+}
+
+.menu-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.menu-edit-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.menu-edit-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.menu-edit-form .form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.menu-edit-form .form-group label {
+  color: #d4af37;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.menu-edit-form .form-group label i {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.menu-edit-form .form-group input,
+.menu-edit-form .form-group select,
+.menu-edit-form .form-group textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.menu-edit-form .form-group input:focus,
+.menu-edit-form .form-group select:focus,
+.menu-edit-form .form-group textarea:focus {
+  outline: none;
+  border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.1);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.menu-edit-form .form-group input::placeholder,
+.menu-edit-form .form-group textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.menu-edit-form .form-group select option {
+  background: #1a1a2e;
+  color: #fff;
+}
+
+/* Food Type Radio Buttons */
+.food-type-options {
+  display: flex;
+  gap: 1rem;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.3s ease;
+  flex: 1;
+  justify-content: center;
+}
+
+.radio-label input {
+  display: none;
+}
+
+.radio-label.veg .radio-custom {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #22c55e;
+  border-radius: 3px;
+  position: relative;
+}
+
+.radio-label.veg .radio-custom::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.radio-label.veg input:checked ~ .radio-custom::before {
+  opacity: 1;
+}
+
+.radio-label.veg input:checked ~ span:last-child {
+  color: #22c55e;
+}
+
+.radio-label.veg:has(input:checked) {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.radio-label.nonveg .radio-custom {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ef4444;
+  border-radius: 3px;
+  position: relative;
+}
+
+.radio-label.nonveg .radio-custom::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.radio-label.nonveg input:checked ~ .radio-custom::before {
+  opacity: 1;
+}
+
+.radio-label.nonveg input:checked ~ span:last-child {
+  color: #ef4444;
+}
+
+.radio-label.nonveg:has(input:checked) {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.radio-label span:last-child {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+/* Availability Toggle */
+.available-toggle {
+  margin-top: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.availability-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.switch-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.switch-label input {
+  display: none;
+}
+
+.switch-slider {
+  width: 44px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.switch-slider::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.switch-label input:checked ~ .switch-slider {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.switch-label input:checked ~ .switch-slider::before {
+  transform: translateX(20px);
+}
+
+.switch-text {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.switch-label:has(input:checked) .switch-text {
+  color: #22c55e;
+}
+
+.switch-label:has(input:not(:checked)) .switch-text::after {
+  content: ' (Unavailable)';
+  color: rgba(239, 68, 68, 0.8);
+  font-size: 0.75rem;
+}
+
+.switch-label:has(input:checked) .switch-text::after {
+  content: '';
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.btn-cancel {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-cancel:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.btn-submit {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #d4af37, #8b6914);
+  border: none;
+  color: #fff;
+}
+
+.btn-submit:hover {
+  background: linear-gradient(135deg, #e4bf47, #9b7924);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+/* Modal Photo Upload */
+.modal-photo-upload {
+  width: 100%;
+  height: 100px;
+  border: 2px dashed rgba(212, 175, 55, 0.4);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.02);
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-photo-upload:hover {
+  border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.05);
+}
+
+.modal-photo-upload.dragover {
+  border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.1);
+  transform: scale(1.02);
+}
+
+.modal-upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.modal-upload-placeholder i {
+  font-size: 1.5rem;
+  color: #d4af37;
+}
+
+.modal-upload-placeholder span {
+  font-size: 0.75rem;
+}
+
+.modal-upload-preview {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.modal-upload-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.remove-modal-photo {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.9);
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  transition: all 0.3s ease;
+}
+
+.remove-modal-photo:hover {
+  background: #dc2626;
+  transform: scale(1.1);
 }
 
 /* Booking Details Grid Layout */
@@ -2487,7 +2910,6 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(212, 175, 55, 0.2);
   border-radius: 12px;
-  overflow: hidden;
   transition: all 0.3s ease;
 }
 
@@ -2597,8 +3019,9 @@
 .setting-group textarea {
   width: 100%;
   padding: 0.875rem 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-sizing: border-box; /* Fix overflow issues */
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   color: #fff;
   font-size: 0.95rem;
@@ -2885,5 +3308,164 @@
 
 .admin-body.light-theme .btn-upload-image:hover {
   background: rgba(139, 105, 20, 0.2);
+}
+
+/* ===================================
+   Add Menu Item Form in Settings
+   =================================== */
+
+.add-menu-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.add-menu-form .setting-group {
+  margin-bottom: 0.75rem;
+}
+
+.add-menu-form .checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 1.75rem;
+}
+
+.add-menu-form .checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.add-menu-form .checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #d4af37;
+}
+
+/* Photo Upload Area */
+.photo-upload-area {
+  border: 2px dashed rgba(212, 175, 55, 0.4);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.2);
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-upload-area:hover {
+  border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.photo-upload-area.dragover {
+  border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.15);
+  transform: scale(1.02);
+}
+
+.upload-placeholder {
+  color: #888;
+}
+
+.upload-placeholder i {
+  font-size: 2.5rem;
+  color: #d4af37;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.upload-placeholder p {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  color: #ccc;
+}
+
+.upload-placeholder span {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.upload-preview {
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+}
+
+.upload-preview img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid rgba(212, 175, 55, 0.5);
+}
+
+.remove-photo {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 28px;
+  height: 28px;
+  background: #dc3545;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.remove-photo:hover {
+  background: #c82333;
+  transform: scale(1.1);
+}
+
+/* Add Menu Button */
+.btn-add-menu-item {
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  background: linear-gradient(135deg, #d4af37, #b8942d);
+  border: none;
+  border-radius: 10px;
+  color: #1a1a2e;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.btn-add-menu-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
+
+.btn-add-menu-item:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .add-menu-form .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .add-menu-form .checkbox-row {
+    padding-top: 0;
+  }
 }
 

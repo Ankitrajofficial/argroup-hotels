@@ -47,6 +47,13 @@
   --radius-xl: 24px;
 }
 
+/* Utility Classes */
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
 /* Reset & Base Styles */
 * {
   margin: 0;
@@ -2982,7 +2989,38 @@ section {
   box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
 }
 
+
 .btn-admin i {
+  font-size: 0.9rem;
+}
+
+/* Food Menu Button in Navbar */
+.btn-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--neutral-white);
+  border: 1px solid var(--accent-gold);
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-decoration: none;
+  backdrop-filter: blur(4px);
+}
+
+.btn-menu:hover {
+  background: var(--accent-gold);
+  color: var(--primary-navy);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.btn-menu i {
   font-size: 0.9rem;
 }
 
@@ -3404,11 +3442,11 @@ section {
 
   /* Mobile Sign In Icon */
   .btn-signin-mobile {
-    display: flex;
+    display: none !important;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     background: transparent;
     border: 2px solid var(--accent-gold);
     border-radius: 50%;
@@ -3424,7 +3462,7 @@ section {
   }
 
   .btn-signin-mobile i {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   /* Mobile menu container */
@@ -3433,27 +3471,48 @@ section {
     top: 70px;
     left: 0;
     width: 100%;
-    height: calc(100vh - 70px);
-    background: rgba(10, 25, 41, 0.98);
-    backdrop-filter: blur(10px);
+    height: 80vh;
+    max-height: calc(100vh - 90px);
+    background: rgba(8, 18, 30, 0.98);
+    backdrop-filter: blur(15px);
     flex-direction: column;
     padding: 2rem;
+    padding-bottom: 3rem;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 20px 60px rgba(0, 0, 0, 0.3);
     overflow-y: auto;
     z-index: 1001;
-    /* display: flex !important; Removed to allow proper closing */
     display: flex;
     transform: translateX(-100%);
-    visibility: hidden; /* Hide when closed */
-    pointer-events: none; /* Prevent interaction when closed */
+    visibility: hidden;
+    pointer-events: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  /* Dark backdrop overlay when menu is open */
+  body.menu-open::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
   /* Show menu when active */
   .nav-menu.active {
     transform: translateX(0) !important;
-    visibility: visible; /* Show when open */
-    pointer-events: all; /* Allow interaction when open */
+    visibility: visible;
+    pointer-events: all;
   }
 
   /* Mobile menu links */
@@ -4194,7 +4253,7 @@ section {
   }
 
   .notice-subtitle {
-    font-size: 1rem;
+    display: none;
   }
 
   .notice-main-card {
@@ -6267,6 +6326,14 @@ section {
     gap: 15px;
     align-items: center;
     justify-content: space-between;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  /* Hide sticky buttons when mobile menu is open */
+  body.menu-open .mobile-sticky-actions {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
 
   .sticky-btn {
