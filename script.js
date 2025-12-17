@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initMobileMenu();
   initGalleryCarousel();
   initDiningCarousel();
+  initLightbox(); // Initialize lightbox
   initAuth();
   loadSiteSettings(); // Load settings for dynamic content
 });
@@ -1991,8 +1992,120 @@ function escapeHtml(text) {
 function toggleCoupleSection() {
     const section = document.getElementById('coupleSection');
     // Check if on mobile (screen width <= 768px)
-    if (window.innerWidth <= 768) {
-        section.classList.toggle('expanded');
+
+// ===================================
+// Lightbox Feature
+// ===================================
+function initLightbox() {
+  const modal = document.getElementById("lightboxModal");
+  const modalImg = document.getElementById("lightboxImage");
+  const captionText = document.getElementById("lightboxCaption");
+  const closeBtn = document.getElementById("lightboxClose");
+  const prevBtn = document.getElementById("lightboxPrev");
+  const nextBtn = document.getElementById("lightboxNext");
+
+  if (!modal || !modalImg) return;
+
+  // Gather all gallery images (both standard and dining)
+  // We'll group them by their parent container to keep context navigation
+  const getGalleryContext = (img) => {
+    // Check if part of main gallery
+    if (img.closest('.gallery-grid')) {
+      return Array.from(document.querySelectorAll('.gallery-grid img'));
     }
+    // Check if part of carousel (mobile)
+    if (img.closest('.gallery-featured') || img.closest('.gallery-slide')) {
+       // Return all images that might be relevant - simplify to all gallery images for mobile
+       return Array.from(document.querySelectorAll('.gallery-item img, .gallery-featured img'));
+    }
+    return [img]; // Fallback
+  };
+
+  let currentImages = [];
+  let currentIndex = 0;
+
+  function openLightbox(img, index, allImages) {
+    modal.classList.add("active");
+    modalImg.src = img.src;
+    captionText.innerHTML = img.alt;
+    currentImages = allImages;
+    currentIndex = index;
+    document.body.style.overflow = "hidden"; // Prevent scrolling
+  }
+
+  function closeLightbox() {
+    modal.classList.remove("active");
+    document.body.style.overflow = ""; // Restore scrolling
+  }
+
+  function showNext() {
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    updateImage();
+  }
+
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    updateImage();
+  }
+
+  function updateImage() {
+    const img = currentImages[currentIndex];
+    modalImg.style.opacity = 0;
+    setTimeout(() => {
+      modalImg.src = img.src;
+      captionText.innerHTML = img.alt;
+      modalImg.style.opacity = 1;
+    }, 200);
+  }
+
+  // Attach click listeners to all potential gallery images
+  const galleryImages = document.querySelectorAll('.gallery-item img, .gallery-featured img, .carousel-item img');
+  
+  galleryImages.forEach(img => {
+      img.style.cursor = "zoom-in";
+      img.addEventListener('click', function(e) {
+          // Find context
+          let contextImages = [];
+          
+          if (this.closest('.dining-gallery')) {
+              contextImages = Array.from(document.querySelectorAll('.dining-gallery .gallery-item img'));
+              if(contextImages.length === 0) { // Mobile view check
+                  contextImages = [this]; // Simplify for mobile featured if needed
+              }
+          } else if (this.closest('.gallery')) {
+               contextImages = Array.from(document.querySelectorAll('.gallery .gallery-item img'));
+          } else {
+              contextImages = [this];
+          }
+
+          const index = contextImages.indexOf(this);
+          if (index !== -1) {
+              openLightbox(this, index, contextImages);
+          } else {
+              // Fallback if not found in list (e.g. mobile featured image updated dynamically)
+               openLightbox(this, 0, [this]);
+          }
+      });
+  });
+
+  // Event Listeners
+  closeBtn.addEventListener("click", closeLightbox);
+  prevBtn.addEventListener("click", (e) => { e.stopPropagation(); showPrev(); });
+  nextBtn.addEventListener("click", (e) => { e.stopPropagation(); showNext(); });
+
+  // Close on outside click
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeLightbox();
+    }
+  });
+
+  // Keyboard navigation
+  document.addEventListener("keydown", (e) => {
+    if (!modal.classList.contains("active")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") showPrev();
+    if (e.key === "ArrowRight") showNext();
+  });
 }
 
