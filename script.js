@@ -1995,3 +1995,4 @@ function toggleCoupleSection() {
         section.classList.toggle('expanded');
     }
 }
+

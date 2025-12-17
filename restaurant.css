@@ -409,6 +409,7 @@ body {
     margin-bottom: 1rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -726,9 +727,7 @@ body {
     box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
 }
 
-.sticky-cart-btn.visible {
-    display: flex;
-}
+/* .sticky-cart-btn.visible moved to media query */
 
 .cart-info {
     display: flex;
@@ -1086,6 +1085,7 @@ body {
     .item-description {
         font-size: 0.8rem;
         -webkit-line-clamp: 1;
+        line-clamp: 1;
         margin-bottom: 0.5rem;
     }
 
